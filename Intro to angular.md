@@ -4,7 +4,8 @@
 - SPA framework
 - Component based architecture
 - Developed and maintained by google
--
+
+---
 
 ### why angular
 
@@ -13,6 +14,8 @@
 - fast laoding and dev
 - large community
 - Type scirpt support
+
+---
 
 ### Create project
 
@@ -25,3 +28,8 @@ Run the command with a valid project name and use the --directory flag:
 
 `ng new angular-training --directory ./
 `
+
+- RUn project  do `ng serve`
+
+---
+
