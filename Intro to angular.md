@@ -241,4 +241,4 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
   - we have to call a function from html when an event is triggered
   eg: <button (click)="onClick()">Click Me</button>
 - (event)="methodName()"
--
+- $event is used to capture event payload from the html to the ts file

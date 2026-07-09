@@ -1,6 +1,12 @@
-<div class="bg-white flex flex-col justify-center items-center p-4 rounded-full">
+<div class="bg-white flex flex-col justify-center items-center p-2 rounded-sm w-[20rem]">
     <p class="text-red">eventbinding works!</p>
     <button (click)="ShowName()" class="bg-indigo-400 p-2 rounded-full text-black" type="
     button">Click button to check the event binding</button>
     <p> this is interpolation : {{name}}</p>
+    <button (click)="showEvent($event)" class="bg-indigo-400 p-2 rounded-full text-black" type="
+    button">Click button to check the event binding</button>
+</div>
+<div class="bg-white p-4 w-[20rem] mt-4">
+    <input type="text" (input)="setUserName($event.target.value)" [value]="userName()" class="border border-red">
+    <p class="text-blue-500">the type name is {{userName()}}</p>
 </div>

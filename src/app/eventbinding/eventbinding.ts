@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 @Component({
   selector: 'app-eventbinding',
@@ -10,5 +10,13 @@ export class Eventbinding {
   name: string = "Jay";
   ShowName() {
     window.alert(this.name);
-  }
+  };
+  showEvent(e: any) {
+    console.log(e);
+    window.alert("Check console log for event!")
+  };
+  userName = signal('helo');
+  setUserName(e: any) {
+    this.userName.set(e);
+  };
 }
