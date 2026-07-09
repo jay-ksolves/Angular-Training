@@ -132,4 +132,68 @@ angular-training/
 
 ---
 
-- 
+- #### Interpolations (to display output in html view)
+
+  - Rules:
+    - We cant do  <p>{{name, age, salary}}</p> but we have to do like <p>{{name}},{{age}},{{salary}}</p>
+    - We cant do any logic in interpolation
+    - Dont do big function call inside { { } }
+    - Dont modify the value inside interpolation
+    - unidirectional --> app.ts to app.html not the other way around
+    - we can write varibales, simple expression , arithmetic operation inside and function call with simple logic
+    - we cant write or do assignment, write arrow functions, loops, complex functions, new keyword, dom access
+
+---
+
+### Angular CLI (`npm install -g @angular/cli`)
+
+- **What is Angular CLI:** CLI stands for Command Line Interface. It is used to initialize, develop, scaffold, build, test, and maintain Angular applications.
+- **Check installed version:** `ng version` (checks if Angular CLI is installed and displays environment details)
+- **Create a new project:** `ng new project_name`
+- **Run the project (Dev server):** `ng serve`
+- **Run and open in default browser:** `ng serve --open` or `ng serve -o`
+- **Build the project:** `ng build` (compiles the app into an output directory for deployment)
+- **Run unit tests:** `ng test`
+- **Generate component:** `ng g c component_name` or `ng generate component component_name`
+- **Generate component in a specific folder:** `ng g c parent/child` (creates a subfolder `child` inside the `parent` directory)
+- **Generate service:** `ng g s service_name` or `ng generate service service_name`
+- **Generate service in a specific folder:** `ng g s parent/child` (creates a service inside `parent/` directory)
+- **Generate directive:** `ng g d directive_name` or `ng generate directive directive_name`
+- **Generate directive in a specific folder:** `ng g d parent/child`
+- **Generate pipe:** `ng g p pipe_name` or `ng generate pipe pipe_name`
+- **Generate pipe in a specific folder:** `ng g p parent/child`
+- **to run on different port:** `ng serve --port 4201`
+- **MCP Setup** :`ng mcp add https://mcp.angular.dev/`
+- **MCP List:** `ng mcp list`
+- **MCP Remove:** `ng mcp remove <server>`
+
+---
+
+#### Component in Angular
+
+- A component is combination of html+typescript+css
+- A component is the building block of an Angular application.
+- A component consists of three parts:
+    1. Template (HTML)
+    2. Styles (CSS)
+    3. Logic (TypeScript)
+    4. Metadata (Decorators)
+- Types of components:
+    1. Stand alone componets ( used now from angualr 14 to 21) - @Component
+    2. Module base components (used before angualr 2 to 13) - @NgModule
+- Stand alone component:
+
+```
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',  ---> used in which html file it will display the component
+  standalone: true, ---> it means it is a standalone component
+  imports: [], ---> in module base components we have to import the components here
+  templateUrl: './app.html', ---> we have all the html of this component here
+  styleUrl: './app.css', ---> we have all the css of this component here`
+})
+export class App {
+  readonly title = 'angular-training';
+}
+```
