@@ -220,6 +220,23 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
 
 ---
 
-#### Property Binding
+#### Property Binding (represented by array [])
 
+- It sends the typescrpit data to html property.
 - when any data is written in typescript component and we want to diplay in html template we can use property binding
+- its representation is square bracket []
+- any data written in type script and  we want to access it via property of html we have to use property binding
+- it is unidirectional
+- syntax is : [property]="value"
+- usecase:
+  - we have mutiple attribut in html like for image src, alt etc... button has diabale then allthese are set used form the proprty binding
+  eg: <img [src]="imageUrl" [alt]="altText">
+
+#### Event Binding
+
+- html se event typescript component me function ki tarah call karna
+- it is represented by parentheses ()
+- syntax is : (event)="function()"
+- usecase:
+  - we have to call a function from html when an event is triggered
+  eg: <button (click)="onClick()">Click Me</button>
