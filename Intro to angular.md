@@ -171,15 +171,16 @@ angular-training/
 
 #### Component in Angular
 
+- Component name shouldbe in small letter only not in camel case.
 - A component is combination of html+typescript+css
 - A component is the building block of an Angular application.
 - A component consists of three parts:
     1. Template (HTML)
     2. Styles (CSS)
     3. Logic (TypeScript)
-    4. Metadata (Decorators)
+    4. Metadata (Decorators)  --> here we define the location liek where s the html file  css file and other components that are used in this component ( it is @Compoent we write), it is must be there in file.
 - Types of components:
-    1. Stand alone componets ( used now from angualr 14 to 21) - @Component
+    1. Stand alone componets ( used now from angualr 14 to 21) - @Component --> Default
     2. Module base components (used before angualr 2 to 13) - @NgModule
 - Stand alone component:
 
@@ -197,3 +198,28 @@ export class App {
   readonly title = 'angular-training';
 }
 ```
+
+- Template vs TemplateUrl :
+  template is for innnter html that is less than 50 lines and templateurl is for outer/external html that is more than 50 lines
+- we can write the html in backticks
+- tempalte is like we can write the html in the same app.ts instead of writing in seperat app.html and giving a url in the template url
+
+- styles vs styleurl   and styleUrls: simialr as we have template and tempale url when we want the style in same fiel use use style and when we want the style sin separte then we have the style url
+styleUrls --> when multiple styles file we have to give in array `styleUrls:["",""]
+
+---
+
+#### Custom Components
+
+- build own components
+- Reuse the component in parent components
+- Use Template and TemplateUrl
+- Use styles and styleUrl
+- Created the TS file
+- Mandatory file we have the .ts file in component and make sure  all component name will be in small letter
+
+---
+
+#### Property Binding
+
+- when any data is written in typescript component and we want to diplay in html template we can use property binding
