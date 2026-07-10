@@ -1,0 +1,16 @@
+<p> this si computed signals example </p>
+<hr />
+
+<h1> Count : {{ count() }}</h1>
+<h1> Double : {{ doubleCount() }}</h1>
+<h1> Triple : {{ tripleCount() }}</h1>
+<button (click)="increment()" class="bg-blue-500">Increment</button>
+<button (click)="this.count.set(0)" class="bg-red-500 ml-3">reset</button>
+
+<hr />
+
+<p>firstName : {{ firstName() }}</p>
+<p>LastName : {{ LastName() }}</p>
+<p>Fullname : {{ fullname() }}</p>
+<button (click)="this.firstName.set('MEWO')" class="bg-blue-500">Update First Name</button>
+<button (click)="this.LastName.set('MEOW')" class="bg-red-500 ml-3">Update Last Name</button>

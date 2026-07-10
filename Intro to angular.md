@@ -312,7 +312,7 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
 ```
 ---
 
-#### Signals ( in angular 21 )
+#### Signals ( in angular 21 ) _ reactive variable
 
 - signals are reactive system for angular that makes angualr fast, simple, more predictable and can detect any change easily, and update only the component that are changed not the all component like before. (in zone)
 - singal is similar to useState in react
@@ -321,3 +321,51 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
   import { signal } from '@angular/core';
   const count = signal(0);
   ```
+- why signals: 
+   -  fast rendering : updated that componnet only where signal value is being used.
+   - no sync pipe needed TO RUN  , no need of subscribe
+   - simple state managemnt
+   - predictable ad dependency tracking
+   - zoneless 
+   - we can set data  using signal.set  or signal.update
+   - signal is synchronous
+ 
+ - Signals with data types
+     -   count = signal<number>(0);
+     -   value = signal<string>("hello");
+     -   student = signal<{name:string,age:number}>({
+        name:"",
+        age:0
+     })
+
+     - Set --> direlty repalce
+     - update --> change 
+ ---
+
+  #### computed signals
+
+    - components updated automatically whenever signal changes that we call computed signals
+    - conputed signals isliek pure functions in js
+    - there is no sideeffect 
+    - computed is same as useMemo 
+    -WHY WE use: 
+       - derived data
+       - avoid recomputation in methods
+       - lazy evaluation
+       - update component automatically based on the dependecies
+       - performace optimization
+
+     - computed is pure func
+     - we shuld not call any api inside computed
+     - we should not set any value using set or update inside computed because of sideeffects
+     
+
+```
+const count = signal(1);
+const double = computed( () => count * 2);
+```
+
+
+---
+
+#### effect in angular

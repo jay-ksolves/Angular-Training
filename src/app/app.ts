@@ -8,10 +8,11 @@ import { Ifelse } from './ifelse/ifelse';
 import { Switch } from './switch/switch';
 import { Forloop } from './forloop/forloop';
 import { Signals } from './signals/signals';
+import { Computedsignals } from './computedsignals/computedsignals';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Login, Eventbinding, Getsetinputfieldvalue, Styleinangular, Ifelse, Switch, Forloop, Signals ],
+  imports: [RouterOutlet, Login, Eventbinding, Getsetinputfieldvalue, Styleinangular, Ifelse, Switch, Forloop, Signals, Computedsignals ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
