@@ -10,6 +10,7 @@ import { Forloop } from './forloop/forloop';
 import { Signals } from './signals/signals';
 import { Computedsignals } from './computedsignals/computedsignals';
 import { Effectsinangualr } from './effectsinangualr/effectsinangualr';
+import { Pipes } from './pipes/pipes';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ import { Effectsinangualr } from './effectsinangualr/effectsinangualr';
     Forloop,
     Signals,
     Computedsignals,
-    Effectsinangualr],
+    Effectsinangualr,
+    Pipes],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

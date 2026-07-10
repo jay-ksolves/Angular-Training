@@ -384,3 +384,13 @@ const double = computed( () => count * 2);
 
 
 
+----
+
+#### Pipes in Angular
+
+ - use to format data in angular without changing the original data
+ - syntax: value | pipe 
+ - pipe take value and return formatted value
+
+---
+#### custom pipe in angular
