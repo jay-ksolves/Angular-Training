@@ -394,3 +394,10 @@ const double = computed( () => count * 2);
 
 ---
 #### custom pipe in angular
+
+ - crete in pipe folder with this ` ng g pipe pipe/pipeShortName           `
+ - transform basicaly convertsinput to output in pipe cusot pipe we have
+
+ ---
+
+ 

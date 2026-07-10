@@ -11,6 +11,8 @@ import { Signals } from './signals/signals';
 import { Computedsignals } from './computedsignals/computedsignals';
 import { Effectsinangualr } from './effectsinangualr/effectsinangualr';
 import { Pipes } from './pipes/pipes';
+import { Custompipe } from './custompipe/custompipe';
+
 
 @Component({
   selector: 'app-root',
@@ -25,7 +27,9 @@ import { Pipes } from './pipes/pipes';
     Signals,
     Computedsignals,
     Effectsinangualr,
-    Pipes],
+    Pipes,
+    Custompipe
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
