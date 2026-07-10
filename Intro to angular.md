@@ -369,3 +369,18 @@ const double = computed( () => count * 2);
 ---
 
 #### effect in angular
+
+- effect is used to perform sideeffects in angular
+-  whenever signal is updated effect automatic runs
+- differce between effect adn computed signals is: 
+    - computed signal isrun over new value where as effect run over value changes  liek rerun the method 
+    
+- constructor is run berofe any code run
+- we use effect when we want like set localstorage or boweer api call or dom access,= or console logging or communicate with components or auto run logics
+- cunenrly effect is sync chronus but in comoing time it will be asynchnus
+- dont use set or update inside the effect as infiinity loop will run
+-  run when signal create adn thwn value changes 
+
+
+
+

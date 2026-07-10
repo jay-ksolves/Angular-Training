@@ -9,10 +9,21 @@ import { Switch } from './switch/switch';
 import { Forloop } from './forloop/forloop';
 import { Signals } from './signals/signals';
 import { Computedsignals } from './computedsignals/computedsignals';
+import { Effectsinangualr } from './effectsinangualr/effectsinangualr';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Login, Eventbinding, Getsetinputfieldvalue, Styleinangular, Ifelse, Switch, Forloop, Signals, Computedsignals ],
+  imports: [RouterOutlet,
+    Login,
+    Eventbinding,
+    Getsetinputfieldvalue,
+    Styleinangular,
+    Ifelse,
+    Switch,
+    Forloop,
+    Signals,
+    Computedsignals,
+    Effectsinangualr],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
