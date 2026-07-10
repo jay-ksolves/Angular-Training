@@ -1,0 +1,10 @@
+<p>signals works!</p>
+<p>{{value()}}</p>
+<p>{{count()}}</p>
+<div class="flex gap-3">
+    <button (click)="increment()" class="bg-blue-500 p-1 mb-2 rounded-full border">Increment</button>
+    <button (click)="decrement()" class="bg-blue-500 p-1 mb-2 rounded-full border">Decrement</button>
+    <button (click)="count.set(10)" class="bg-red-500 p-1 mb-2 rounded-full border">Set</button>
+    <button (click)="count.update((c)=>c+1)" class="bg-green-500 p-1 mb-2 rounded-full border">Update</button>
+    <button (click)="count.set(0);value.set('hello')" class="bg-yellow-500 p-1 mb-2 rounded-full border">Reset</button>
+</div>

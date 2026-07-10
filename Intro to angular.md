@@ -310,3 +310,14 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
   <!-- empty -->
 }
 ```
+---
+
+#### Signals ( in angular 21 )
+
+- signals are reactive system for angular that makes angualr fast, simple, more predictable and can detect any change easily, and update only the component that are changed not the all component like before. (in zone)
+- singal is similar to useState in react
+- syntax: 
+  ```
+  import { signal } from '@angular/core';
+  const count = signal(0);
+  ```
