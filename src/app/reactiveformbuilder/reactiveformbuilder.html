@@ -1,0 +1,10 @@
+<h1>Reactive Form Builder</h1>
+<form action="" [formGroup]="form">
+  <input type="text" formControlName="name" placeholder="Name">
+  <input type="text" formControlName="email" placeholder="Email">
+  <button type="submit">Submit</button>
+</form>
+
+
+<p>Name: {{userSignal()?.name   }}</p>
+<p>Email: {{userSignal()?.email}}</p>
