@@ -242,3 +242,23 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
   eg: <button (click)="onClick()">Click Me</button>
 - (event)="methodName()"
 - $event is used to capture event payload from the html to the ts file
+- one way unideirection view to typescipt
+
+---
+
+#### get and set input field value in Angular
+
+- using fn + event
+- using $event (event object)
+- using template reference variable (#ref)
+
+
+---
+
+#### Styling in angular
+- Component style
+- Global Style
+- New Global Style File
+- internal style
+- inline style in component.ts
+- multiple css in component

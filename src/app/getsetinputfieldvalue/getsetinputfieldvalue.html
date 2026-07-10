@@ -1,0 +1,26 @@
+<br />
+<div class="bg-slate-500 flex flex-col justify-center items-center p-2 rounded-sm w-[20rem]">
+    <p class="text-red">getsetinputfieldvalue using funciton and event!</p>
+
+    <input placeholder="Enter Name" (input)="updateName($event.target.value)" class="border bg-indigo-400" />
+    <p> your Name: {{name}}</p>
+</div>
+<hr />
+<br />
+<div class="bg-slate-500 flex flex-col justify-center items-center p-2 rounded-sm w-[20rem]">
+    <p class="text-red">getsetinputfieldvalue using simple event</p>
+
+    <input placeholder="Enter city" (input)="city=$event.target.value" class="border bg-indigo-400" />
+    <p> your city: {{city}}</p>
+</div>
+
+<hr />
+<br />
+<div class="bg-slate-500 flex flex-col justify-center items-center p-2 rounded-sm w-[20rem]">
+    <p class="text-red">getsetinputfieldvalue using template reference variable</p>
+
+    <input #userinputemail placeholder="Enter email" class="border bg-indigo-400" />
+    <button (click)="getuseremail(userinputemail.value)" class="border-2 bg-white rounded-md" type="button">Set
+        email</button>
+    <p> your email: {{email}}</p>
+</div>

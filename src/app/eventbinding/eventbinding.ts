@@ -15,7 +15,7 @@ export class Eventbinding {
     console.log(e);
     window.alert("Check console log for event!")
   };
-  userName = signal('helo');
+  userName = signal('Meow');
   setUserName(e: any) {
     this.userName.set(e);
   };
