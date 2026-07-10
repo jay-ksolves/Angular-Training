@@ -16,6 +16,7 @@ import { Ngmodelbinding } from './ngmodelbinding/ngmodelbinding';
 import { Livesearch } from './livesearch/livesearch';
 import { TodoApp } from './todo-app/todo-app';
 import { Templetedrivenfromandsignal } from './templetedrivenfromandsignal/templetedrivenfromandsignal';
+import { Usecommoncomponent } from './usecommoncomponent/usecommoncomponent';
 
 
 @Component({
@@ -36,7 +37,8 @@ import { Templetedrivenfromandsignal } from './templetedrivenfromandsignal/templ
     Ngmodelbinding,
     Livesearch,
     TodoApp,
-    Templetedrivenfromandsignal
+    Templetedrivenfromandsignal,
+    Usecommoncomponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',

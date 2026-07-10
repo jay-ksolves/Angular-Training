@@ -252,10 +252,10 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
 - using $event (event object)
 - using template reference variable (#ref)
 
-
 ---
 
 #### Styling in angular
+
 - Component style
 - Global Style
 - New Global Style File
@@ -264,9 +264,11 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
 - multiple css in component
 
 ---
+
 #### control flow in Angular in html file
- - old we use ngif 
- - now we have this syntax : 
+
+- old we use ngif
+- now we have this syntax :
 
 ```
 @if(condition){
@@ -279,7 +281,9 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
     <!-- else -->
 }
 ```
+
 ---
+
 #### switch in angular
 
 ```
@@ -301,7 +305,8 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
 - for loop contextual variable are: $index,$count,$first,$last,$even,$odd
 - @empty is used to display the empty value when array is empty
 - track is mandatory for @for it helps to track the item
-- 
+-
+
 ```
 @for(item of items; track item.id){
   <!-- code -->
@@ -310,39 +315,43 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
   <!-- empty -->
 }
 ```
+
 ---
 
 #### Signals ( in angular 21 ) _ reactive variable
 
 - signals are reactive system for angular that makes angualr fast, simple, more predictable and can detect any change easily, and update only the component that are changed not the all component like before. (in zone)
 - singal is similar to useState in react
-- syntax: 
+- syntax:
+
   ```
   import { signal } from '@angular/core';
   const count = signal(0);
   ```
-- why signals: 
-   -  fast rendering : updated that componnet only where signal value is being used.
-   - no sync pipe needed TO RUN  , no need of subscribe
-   - simple state managemnt
-   - predictable ad dependency tracking
-   - zoneless 
-   - we can set data  using signal.set  or signal.update
-   - signal is synchronous
- 
- - Signals with data types
-     -   count = signal<number>(0);
-     -   value = signal<string>("hello");
-     -   student = signal<{name:string,age:number}>({
+
+- why signals:
+  - fast rendering : updated that componnet only where signal value is being used.
+  - no sync pipe needed TO RUN  , no need of subscribe
+  - simple state managemnt
+  - predictable ad dependency tracking
+  - zoneless
+  - we can set data  using signal.set  or signal.update
+  - signal is synchronous
+
+- Signals with data types
+  - count = signal<number>(0);
+  - value = signal<string>("hello");
+  - student = signal<{name:string,age:number}>({
         name:"",
         age:0
      })
 
-     - Set --> direlty repalce
-     - update --> change 
+  - Set --> direlty repalce
+  - update --> change
+
  ---
 
-  #### computed signals
+#### computed signals
 
     - components updated automatically whenever signal changes that we call computed signals
     - conputed signals isliek pure functions in js
@@ -365,63 +374,69 @@ const count = signal(1);
 const double = computed( () => count * 2);
 ```
 
-
 ---
 
 #### effect in angular
 
 - effect is used to perform sideeffects in angular
--  whenever signal is updated effect automatic runs
-- differce between effect adn computed signals is: 
-    - computed signal isrun over new value where as effect run over value changes  liek rerun the method 
-    
+- whenever signal is updated effect automatic runs
+- differce between effect adn computed signals is:
+  - computed signal isrun over new value where as effect run over value changes  liek rerun the method
+
 - constructor is run berofe any code run
 - we use effect when we want like set localstorage or boweer api call or dom access,= or console logging or communicate with components or auto run logics
 - cunenrly effect is sync chronus but in comoing time it will be asynchnus
 - dont use set or update inside the effect as infiinity loop will run
--  run when signal create adn thwn value changes 
-
-
-
+- run when signal create adn thwn value changes
 
 ----
 
 #### Pipes in Angular
 
- - use to format data in angular without changing the original data
- - syntax: value | pipe 
- - pipe take value and return formatted value
+- use to format data in angular without changing the original data
+- syntax: value | pipe
+- pipe take value and return formatted value
 
 ---
+
 #### custom pipe in angular
 
- - crete in pipe folder with this ` ng g pipe pipe/pipeShortName           `
- - transform basicaly convertsinput to output in pipe cusot pipe we have
+- crete in pipe folder with this ` ng g pipe pipe/pipeShortName `
+- transform basicaly convertsinput to output in pipe cusot pipe we have
 
  ---
 
- #### signal deep dive: 
+#### signal deep dive
 
- - fine grained reactivity  --> updated only that part in compoent that has singal use rather than whole component
- - signal graph  --> track singla like a graph how it is internally 
-      - graph has 
- - avoid over rendering
+- fine grained reactivity  --> updated only that part in compoent that has singal use rather than whole component
+- signal graph  --> track singla like a graph how it is internally
+  - graph has
+- avoid over rendering
 
 ----
-
 
 #### two way binding
 
 - ui <--> typscript  both direction data sync
-- old method : [(ngModel)] 
-- use [()] 
+- old method : [(ngModel)]
+- use [()]
 
 - ngModel we can use with signal aas when ngmodel property chaneg it dont  update the envent signal directly
-----
 
+----
 
 #### forms with signals
 
-- why use signals with forms? 
-  - when form value udpate ui and state both changes so when signal chaneg then reactive state chanegs and then ui updates so it is fast 
-- 
+- why use signals with forms?
+  - when form value udpate ui and state both changes so when signal chaneg then reactive state chanegs and then ui updates so it is fast
+-
+
+---
+
+#### Resuseable components
+
+- create resuabel compoent that cna be used
+- use signal to pass data to the component 
+- <ng-content></ng-content> forshowing the conents passing whereit is being used .
+
+---
