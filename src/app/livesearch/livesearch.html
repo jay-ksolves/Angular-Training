@@ -1,0 +1,13 @@
+<p>livesearch works!</p>
+<br />
+<hr />
+<input [value]="searchterm()" (input)="searchterm.set($event.target.value)" class="border mt-2 border-red-500" />
+<br />
+<p>All data: </p>
+<p>{{data | json}}</p>
+
+<p>user entered data: {{searchterm()}}</p>
+<br />
+<hr />
+<p>filtered data: </p>
+<p>{{filteredData(searchterm()) | json}}</p>

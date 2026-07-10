@@ -13,6 +13,7 @@ import { Effectsinangualr } from './effectsinangualr/effectsinangualr';
 import { Pipes } from './pipes/pipes';
 import { Custompipe } from './custompipe/custompipe';
 import { Ngmodelbinding } from './ngmodelbinding/ngmodelbinding';
+import { Livesearch } from './livesearch/livesearch';
 
 
 @Component({
@@ -30,7 +31,8 @@ import { Ngmodelbinding } from './ngmodelbinding/ngmodelbinding';
     Effectsinangualr,
     Pipes,
     Custompipe,
-    Ngmodelbinding
+    Ngmodelbinding,
+    Livesearch
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
