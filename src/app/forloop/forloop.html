@@ -1,0 +1,43 @@
+<p>forloop works!</p>
+
+<p>this is displayed using for loop</p>
+@for(item of items; track $index){
+<p class="text-green-500">{{$index + 1}} - {{item}}</p>
+}
+
+<br />
+
+@for(item of arrayofobjects; track item.id){
+<p class="text-blue-500">
+    {{item.id}}- {{item.name}} - {{item.age}}
+</p>
+}
+
+<br />
+
+@for(fruit of fruits; track $index; let i=$index){
+<div class="flex justify-center align-center gap-3 mb-2">
+    <p class="text-blue-500">
+        {{i + 1}} - {{fruit}}
+    </p>
+    <button title="delete" (click)="DeleteItem(i)"
+        class="border border-red-500 rounded-full bg-red-300 hover:bg-red-500 p-1">Remove</button>
+
+</div>
+}
+
+<br />
+
+
+
+<p class=" text-xs text-slate-500">Contextual Variables Tracker-----------------</p>
+@for(fruit of fruits; track $index; let i = $index; let j = $count; let k = $first; let l = $last; let m = $even; let n
+= $odd){
+<div class="flex items-center gap-3 mb-2">
+    <p class="text-slate-600 text-xs">
+        Index: {{i}} | Name: {{fruit}} | Total Elements: {{j}} | First Element? {{k}} | Last Element? {{l}} | Even Row?
+        {{m}} | Odd Row? {{n}}
+    </p>
+</div>
+}
+<br />

@@ -6,10 +6,11 @@ import { Getsetinputfieldvalue } from './getsetinputfieldvalue/getsetinputfieldv
 import { Styleinangular } from './styleinangular/styleinangular';
 import { Ifelse } from './ifelse/ifelse';
 import { Switch } from './switch/switch';
+import { Forloop } from './forloop/forloop';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Login, Eventbinding,Getsetinputfieldvalue,Styleinangular, Ifelse,Switch],
+  imports: [RouterOutlet, Login, Eventbinding, Getsetinputfieldvalue, Styleinangular, Ifelse, Switch, Forloop ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

@@ -292,3 +292,21 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
   }
 }
 ```
+
+---
+
+#### @for in angular
+
+- old we have @ngfor now we have @for
+- for loop contextual variable are: $index,$count,$first,$last,$even,$odd
+- @empty is used to display the empty value when array is empty
+- track is mandatory for @for it helps to track the item
+- 
+```
+@for(item of items; track item.id){
+  <!-- code -->
+}
+@empty{
+  <!-- empty -->
+}
+```
