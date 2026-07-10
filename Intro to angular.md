@@ -400,4 +400,18 @@ const double = computed( () => count * 2);
 
  ---
 
- 
+ #### signal deep dive: 
+
+ - fine grained reactivity  --> updated only that part in compoent that has singal use rather than whole component
+ - signal graph  --> track singla like a graph how it is internally 
+      - graph has 
+ - avoid over rendering
+
+----
+
+
+#### two way binding
+
+- ui <--> typscript  both direction data sync
+- old method : [(ngModel)] 
+- use [()] 

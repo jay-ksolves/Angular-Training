@@ -13,7 +13,6 @@ export class Effectsinangualr {
       console.log(this.count())
       document.body.style.border = this.count() % 2 === 0 ? '3px solid red' : '3px solid blue'
     })
-
   };
   increment() {
     this.count.update((c) => c + 1)

@@ -12,6 +12,7 @@ import { Computedsignals } from './computedsignals/computedsignals';
 import { Effectsinangualr } from './effectsinangualr/effectsinangualr';
 import { Pipes } from './pipes/pipes';
 import { Custompipe } from './custompipe/custompipe';
+import { Ngmodelbinding } from './ngmodelbinding/ngmodelbinding';
 
 
 @Component({
@@ -28,7 +29,8 @@ import { Custompipe } from './custompipe/custompipe';
     Computedsignals,
     Effectsinangualr,
     Pipes,
-    Custompipe
+    Custompipe,
+    Ngmodelbinding
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',

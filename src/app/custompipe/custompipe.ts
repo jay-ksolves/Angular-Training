@@ -10,9 +10,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './custompipe.html',
   styleUrl: './custompipe.css',
 })
+
 export class Custompipe {
   fullName = "jay prakash";
   usd = 5;
   rate = 100;
-  longsentence = "we use pipes in angular to transform the data ";
+  longsentence = "we use pipes in angular to transform the data";
 }
