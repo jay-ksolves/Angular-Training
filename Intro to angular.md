@@ -279,4 +279,16 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
     <!-- else -->
 }
 ```
-- 
+---
+#### switch in angular
+
+```
+@switch(expression){
+  @case(value){
+    <!-- code -->
+  }
+  @default{
+    <!-- code -->
+  }
+}
+```
