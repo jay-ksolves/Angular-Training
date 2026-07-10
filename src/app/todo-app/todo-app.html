@@ -1,0 +1,36 @@
+<p>todo-app works!</p>
+<br />
+<hr />
+
+<!-- add tasks -->
+<input [value]="inputdata" (input)="inputdata = $event.target.value" placeholder="Enter task"
+    class="border border-red-500 p-3" />
+
+<button type="button" (click)="AddTask(inputdata)" class="border border-green-500 p-3 bg-green-300 outline-none">Add
+    Task</button>
+
+
+<!-- diplay data  -->
+@for(item of items ; track item.id){
+<div class="border border-slate-500 p-3 bg-white flex items-center justify-between gap-3">
+    <p class="break-all">{{item.id}} - <span [class.line-through]="item.markasread">{{item.value}}</span></p>
+    <div class="flex gap-3">
+        <button type="button" (click)="markAsRead(item.id)" class="bg-blue-400 p-2 rounded-full outline-none">
+
+            @if(item.markasread){
+            <span>
+                done
+            </span>
+            }
+            @else{
+            <span>
+                pending
+            </span>
+            }
+        </button>
+        <button type="button" (click)="deleteTask(item.id)"
+            class="bg-red-500 rounded-full p-1 border-red-500">Delete</button>
+    </div>
+
+</div>
+}

@@ -14,6 +14,7 @@ import { Pipes } from './pipes/pipes';
 import { Custompipe } from './custompipe/custompipe';
 import { Ngmodelbinding } from './ngmodelbinding/ngmodelbinding';
 import { Livesearch } from './livesearch/livesearch';
+import { TodoApp } from './todo-app/todo-app';
 
 
 @Component({
@@ -32,7 +33,8 @@ import { Livesearch } from './livesearch/livesearch';
     Pipes,
     Custompipe,
     Ngmodelbinding,
-    Livesearch
+    Livesearch,
+    TodoApp
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',

@@ -415,3 +415,6 @@ const double = computed( () => count * 2);
 - ui <--> typscript  both direction data sync
 - old method : [(ngModel)] 
 - use [()] 
+
+- ngModel we can use with signal aas when ngmodel property chaneg it dont  update the envent signal directly
+----
