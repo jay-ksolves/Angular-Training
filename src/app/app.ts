@@ -4,10 +4,11 @@ import { Login } from './login/login';
 import { Eventbinding } from './eventbinding/eventbinding';
 import { Getsetinputfieldvalue } from './getsetinputfieldvalue/getsetinputfieldvalue';
 import { Styleinangular } from './styleinangular/styleinangular';
+import { Ifelse } from './ifelse/ifelse';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Login, Eventbinding,Getsetinputfieldvalue,Styleinangular],
+  imports: [RouterOutlet, Login, Eventbinding,Getsetinputfieldvalue,Styleinangular, Ifelse],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

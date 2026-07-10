@@ -262,3 +262,21 @@ styleUrls --> when multiple styles file we have to give in array `styleUrls:["",
 - internal style
 - inline style in component.ts
 - multiple css in component
+
+---
+#### control flow in Angular in html file
+ - old we use ngif 
+ - now we have this syntax : 
+
+```
+@if(condition){
+    <!-- true -->
+}
+@else if(condition){
+    <!-- false -->
+}
+@else{
+    <!-- else -->
+}
+```
+- 

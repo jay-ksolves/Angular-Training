@@ -1,0 +1,36 @@
+<p>ifelse works!</p>
+
+
+@if(isTrue){
+<p>true</p>
+}
+@else if(isTrue){
+<p>false</p>
+}
+@else{
+<p>else</p>
+}
+
+
+<br />
+@if(marks>80){
+<p>this is read from the ifelse.ts and passed through interpolation and ypir makes is {{marks}}</p>
+}
+
+<br />
+
+<button (click)="toogleShowBox()" class='p-2 bg-blue-400'>
+    @if(showBox){
+    <p>Hide</p>
+    } @else {
+    <p>Show</p>
+    }
+</button>
+
+@if(showBox){
+<div class="border border-red-500 p-5">
+    this is box
+</div>
+}@else{
+<p>Box is hidden</p>
+}
