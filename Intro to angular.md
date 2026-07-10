@@ -418,3 +418,10 @@ const double = computed( () => count * 2);
 
 - ngModel we can use with signal aas when ngmodel property chaneg it dont  update the envent signal directly
 ----
+
+
+#### forms with signals
+
+- why use signals with forms? 
+  - when form value udpate ui and state both changes so when signal chaneg then reactive state chanegs and then ui updates so it is fast 
+- 

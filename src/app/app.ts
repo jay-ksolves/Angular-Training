@@ -15,6 +15,7 @@ import { Custompipe } from './custompipe/custompipe';
 import { Ngmodelbinding } from './ngmodelbinding/ngmodelbinding';
 import { Livesearch } from './livesearch/livesearch';
 import { TodoApp } from './todo-app/todo-app';
+import { Templetedrivenfromandsignal } from './templetedrivenfromandsignal/templetedrivenfromandsignal';
 
 
 @Component({
@@ -34,7 +35,8 @@ import { TodoApp } from './todo-app/todo-app';
     Custompipe,
     Ngmodelbinding,
     Livesearch,
-    TodoApp
+    TodoApp,
+    Templetedrivenfromandsignal
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',

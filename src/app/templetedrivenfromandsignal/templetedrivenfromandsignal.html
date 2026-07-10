@@ -1,0 +1,11 @@
+<p>templetedrivenfromandsignal works!</p>
+<br />
+<hr />
+<input [(ngModel)]="name"  class="border bg-white" placeholder="entername" (ngModelChange)="name.set($event.target.value)">
+<input [(ngModel)]="email"  class="border bg-white" placeholder="enter email" (ngModelChange)="email.set($event.target.value)">
+
+<p> {{name()}}</p>
+<p> {{email()}}</p>
+
+<button (click)="submitForm()" class="border bg-white">submit</button>
+<br/>
