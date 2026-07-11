@@ -436,7 +436,16 @@ const double = computed( () => count * 2);
 #### Resuseable components
 
 - create resuabel compoent that cna be used
-- use signal to pass data to the component 
+- use signal to pass data to the component
 - <ng-content></ng-content> forshowing the conents passing whereit is being used .
 
 ---
+
+# Angualar ROuting app.route.ts
+
+- Routing array is like a list and in that we enter the urls that we need to treat as a routing
+syntax:  {path: 'path url', component: Component name}
+- router outlet: <routerOutlet></routeroutlet>  this swe need to wite in app.html file where we want to display the routed components like gibing permisonto applcationto show the othe routes
+- router link;  <a routerLink='/home'>Home page</a>
+
+- Nested routing , chile routing:

@@ -1,5 +1,5 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { Login } from './login/login';
 import { Eventbinding } from './eventbinding/eventbinding';
 import { Getsetinputfieldvalue } from './getsetinputfieldvalue/getsetinputfieldvalue';
@@ -38,7 +38,8 @@ import { Usecommoncomponent } from './usecommoncomponent/usecommoncomponent';
     Livesearch,
     TodoApp,
     Templetedrivenfromandsignal,
-    Usecommoncomponent
+    Usecommoncomponent,
+    RouterLink,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
