@@ -459,3 +459,7 @@ syntax:  {path: 'path url', component: Component name}
 - now we haev on 21 load component a single thing rater than multiple
 - how to check , got to sources tab of chorme dev tools check the SRC folder  ifany new file apprear when moving to a route names with chunks then  it means that route is lazy loaded component.
 - syntax we do in the app route file by {path: 'home', loadComponent: () => import('./home/home').then(m => m.Home)}
+
+---
+
+#### Header coponent in angular

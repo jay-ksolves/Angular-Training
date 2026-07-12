@@ -17,6 +17,8 @@ import { Livesearch } from './livesearch/livesearch';
 import { TodoApp } from './todo-app/todo-app';
 import { Templetedrivenfromandsignal } from './templetedrivenfromandsignal/templetedrivenfromandsignal';
 import { Usecommoncomponent } from './usecommoncomponent/usecommoncomponent';
+import { Header } from './header/header';
+import { Footer } from './footer/footer';
 
 
 @Component({
@@ -40,6 +42,8 @@ import { Usecommoncomponent } from './usecommoncomponent/usecommoncomponent';
     Templetedrivenfromandsignal,
     Usecommoncomponent,
     RouterLink,
+    Header,
+    Footer
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
