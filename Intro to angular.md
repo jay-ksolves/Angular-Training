@@ -462,4 +462,8 @@ syntax:  {path: 'path url', component: Component name}
 
 ---
 
-#### Header coponent in angular
+#### wild card routing or say 404 page
+
+- if in url we enter any url that is not defined in the routing table then it will show the 404 page
+- syntax: {path: '**', component: Component name}
+- we have to wite this at the end in the routing table

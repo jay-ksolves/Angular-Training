@@ -1,0 +1,10 @@
+.active{
+    text-decoration: dashed;
+    color:aqua;
+    text-shadow: 2px 2px 2px black;
+    offset: 5px;
+    cursor: pointer;
+    &:hover{
+        text-decoration: underline;
+    }
+}

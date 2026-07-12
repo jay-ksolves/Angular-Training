@@ -5,6 +5,7 @@ import { Parent } from './parent/parent';
 import { Child } from './child/child';
 import { Grandchild } from './grandchild/grandchild';
 import { Notlazyloadcomponent } from './notlazyloadcomponent/notlazyloadcomponent';
+import { Pagenotfound } from './pagenotfound/pagenotfound';
 
 export const routes: Routes = [
     
@@ -33,4 +34,7 @@ export const routes: Routes = [
     {
         path:'notlazyload-component', component:Notlazyloadcomponent
     },
+    {
+        path:'**', component:Pagenotfound
+    }
 ];

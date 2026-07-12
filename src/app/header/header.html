@@ -2,11 +2,11 @@
 
     <h2 class="text-3xl font-extrabold text-white">Angular Training</h2>
     <nav>
-        <a routerLink="/" class="bg-blue-200 underline text-black-200 p-2 text-xl cursor-pointer">Home</a>
-        <a routerLink="/about" class="bg-blue-200 underline text-black-200 p-2 text-xl cursor-pointer">About</a>
-        <a routerLink="/parent" class="bg-blue-200 underline text-black-200 p-2 text-xl cursor-pointer">Parent</a>
-        <a routerLink="/lazyload-component" class="bg-blue-200 underline text-black-200 p-2 text-xl cursor-pointer">Lazy Component</a>
-        <a routerLink="/notlazyload-component" class="bg-blue-200 underline text-black-200 p-2 text-xl cursor-pointer">Not Lazy Component</a>
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="bg-blue-200  text-black-200 p-2 text-xl cursor-pointer hover:underline">Home</a>
+        <a routerLink="/about" routerLinkActive="active" class="bg-blue-200  text-black-200 p-2 text-xl cursor-pointer hover:underline">About</a>
+        <a routerLink="/parent" routerLinkActive="active" class="bg-blue-200  text-black-200 p-2 text-xl cursor-pointer hover:underline">Parent</a>
+        <a routerLink="/lazyload-component" routerLinkActive="active" class="bg-blue-200  text-black-200 p-2 text-xl cursor-pointer hover:underline">Lazy Component</a>
+        <a routerLink="/notlazyload-component" routerLinkActive="active" class="bg-blue-200  text-black-200 p-2 text-xl cursor-pointer hover:underline">Not Lazy Component</a>
     </nav>
 </header>
 <router-outlet></router-outlet>
