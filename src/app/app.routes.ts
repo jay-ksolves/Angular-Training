@@ -4,6 +4,7 @@ import { Aboutpage } from './aboutpage/aboutpage';
 import { Parent } from './parent/parent';
 import { Child } from './child/child';
 import { Grandchild } from './grandchild/grandchild';
+import { Notlazyloadcomponent } from './notlazyloadcomponent/notlazyloadcomponent';
 
 export const routes: Routes = [
     
@@ -25,5 +26,11 @@ export const routes: Routes = [
             }
         ]
         }]
-    }
+    },
+    {
+        path:'lazyload-component',loadComponent:()=> import('./lazylaodcomponent/lazylaodcomponent').then(m => m.Lazylaodcomponent)
+    },
+    {
+        path:'notlazyload-component', component:Notlazyloadcomponent
+    },
 ];

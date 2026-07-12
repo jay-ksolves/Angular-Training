@@ -441,7 +441,7 @@ const double = computed( () => count * 2);
 
 ---
 
-# Angualar ROuting app.route.ts
+#### Angualar ROuting app.route.ts
 
 - Routing array is like a list and in that we enter the urls that we need to treat as a routing
 syntax:  {path: 'path url', component: Component name}
@@ -449,3 +449,13 @@ syntax:  {path: 'path url', component: Component name}
 - router link;  <a routerLink='/home'>Home page</a>
 
 - Nested routing , chile routing:
+
+---
+
+####  Lazy Loading in Angular 
+
+- lazy loading/ load compoent 
+- in old we have  ngload and loadchildern 
+- now we haev on 21 load component a single thing rater than multiple
+- how to check , got to sources tab of chorme dev tools check the SRC folder  ifany new file apprear when moving to a route names with chunks then  it means that route is lazy loaded component.
+- syntax we do in the app route file by {path: 'home', loadComponent: () => import('./home/home').then(m => m.Home)}
