@@ -450,12 +450,14 @@ syntax:  {path: 'path url', component: Component name}
 
 - Nested routing , chile routing:
 
+- we sue this this.route.snapshot.  when we have the url staic in cae of dyamnic url we use subcribe to get the value.  without page refresh
+
 ---
 
-####  Lazy Loading in Angular 
+#### Lazy Loading in Angular
 
-- lazy loading/ load compoent 
-- in old we have  ngload and loadchildern 
+- lazy loading/ load compoent
+- in old we have  ngload and loadchildern
 - now we haev on 21 load component a single thing rater than multiple
 - how to check , got to sources tab of chorme dev tools check the SRC folder  ifany new file apprear when moving to a route names with chunks then  it means that route is lazy loaded component.
 - syntax we do in the app route file by {path: 'home', loadComponent: () => import('./home/home').then(m => m.Home)}
@@ -467,3 +469,25 @@ syntax:  {path: 'path url', component: Component name}
 - if in url we enter any url that is not defined in the routing table then it will show the 404 page
 - syntax: {path: '**', component: Component name}
 - we have to wite this at the end in the routing table
+
+---
+
+#### Route guards
+
+- route protections
+- Auth guard ( CanActivate ) - > to check is user loged in or not, block routing when not loged in, redirect to login page, or can activate child components.
+- Auth guard (CanDeactivate) - > to check user want to move from the current page or not / if any form left unfilled  then block routing or  ask user for confirmation. just like isDirty in react hook form
+- Auth guard (CanLoad) - > to check lazy load component before loading it , if it is false then it will not load the component.
+- Auth guard (CanMatch)-->  match or not decide based on condition if it is true then it will allow or false , router will not match that url
+- url match strategy
+- ng g guard namehere like `ng g guard authGuard`
+
+- ng g guard auth --no-functional      --> Generate a Class-Based Guard
+If you explicitly need an old-school class-based guard that implements multiple interfaces at the same time (like both CanActivate and CanDeactivate), you must add the --no-functional flag
+
+- modern versions of Angular default to generating functional guards rather than class-based guards.
+Because a functional guard is just a single function (e.g., CanActivateFn), it can only handle one guard type at a time. If you select more than one option in the CLI interactive prompt, it throws that error.
+
+---
+
+

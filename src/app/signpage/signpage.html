@@ -1,0 +1,28 @@
+<app-card title="Welcome to signin page" description="">
+    @if(!isLoggedIn()){
+        <app-button label="Login" (clicked)="signin()"></app-button>
+    }
+    
+    @if(isLoggedIn()){
+        <app-button label="Logout" (clicked)="singout()"></app-button>
+    }
+</app-card>
+<br/>
+@if(!isLoggedIn()){
+    <a routerLink="/" class="bg-blue-200  text-black-200 p-2 text-xl cursor-pointer hover:underline">Go to home page</a>
+}
+
+<br/>
+
+
+
+<app-card title="User Status" description="">
+    @if(!isLoggedIn()){
+        <p>You are not logged in</p>
+    }
+    @else{
+        <p>You are logged in</p>
+        <br/>
+    <a routerLink="/successful-signin" class="bg-blue-200  text-black-200 p-2 text-xl cursor-pointer hover:underline">Go dashboard</a>  
+    }
+</app-card>

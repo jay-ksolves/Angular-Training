@@ -6,6 +6,10 @@ import { Child } from './child/child';
 import { Grandchild } from './grandchild/grandchild';
 import { Notlazyloadcomponent } from './notlazyloadcomponent/notlazyloadcomponent';
 import { Pagenotfound } from './pagenotfound/pagenotfound';
+import { Signpage } from './signpage/signpage';
+import { authGuard } from './auth-guard';
+import { Successfulsignin } from './successfulsignin/successfulsignin';
+import { ProductComponent } from './product-component/product-component';
 
 export const routes: Routes = [
     
@@ -33,6 +37,15 @@ export const routes: Routes = [
     },
     {
         path:'notlazyload-component', component:Notlazyloadcomponent
+    },
+    {
+        path:'signin', component: Signpage
+    },
+    {
+        path:'successful-signin', component: Successfulsignin, canActivate:[authGuard]
+    },
+    {
+        path:'product/:id',component: ProductComponent
     },
     {
         path:'**', component:Pagenotfound
