@@ -490,4 +490,43 @@ Because a functional guard is just a single function (e.g., CanActivateFn), it c
 
 ---
 
+#### Navigate API
 
+- use to navigate to the different routes
+- syntax: eg:  login(){
+  this.router.navigate(['dashboard]);
+}
+
+- Navigate has three method :
+  1. navigate():
+     1. navigate [] --> navigate to the root url
+     2. navigate(['path']) --> navigate to the path
+     3. navigate(['path' , 'id']) --> navigate to the path with id
+     4. navigate(['path' , 'id' , 'name']) --> navigate to the path with id and name
+     5. navigate(['path' , {queryParam: 'value'}] --> navigate to the path with query parameter
+     6. navigate(['path' , {queryParamsHandling: 'merge'}] --> navigate to the path with query parameter handling
+     7. navigate(['path' , {queryParamsHandling: 'preserve'}] --> navigate to the path with query parameter handling
+     8. navigate(['path' , {queryParamsHandling: 'never'}] --> navigate to the path with query parameter handling
+     9. navigate(['path' , {queryParamsHandling: 'always'}] --> navigate to the path with query parameter handling
+     10. navigate(['path' , {preserveFragment: true}] --> navigate to the path with fragment
+     11. navigate(['path' , {relativeTo: this.route}] --> navigate to the path with relative route
+     12. navigate(['path' , {skipLocationChange: true}] --> navigate to the path without changing the url
+     13. navigate(['path' , {replaceUrl: true}] --> navigate to the path with replacing the url
+     14. navigate(['path' , {replaceUrl: false}] --> navigate to the path with not replacing the url
+     15. navigate(['path' , {relativeTo: this.route,skipLocationChange: true,preserveFragment: true,queryParamsHandling: 'merge'}] --> navigate to the path with all the options
+
+  2. navigateByUrl(url: string , options?: {replaceUrl?:boolean,queryParamsHandling?:''}) --> navigate to the given url
+  3. navigateByUrl('/path') --> navigate to the root url
+  4. navigateByUrl('/path' , 'id') --> navigate to the path with id
+  5. navigateByUrl('/path' , {replaceUrl:true}) --> navigate to the path with replacing the url
+  6. navigateByUrl('/path' , {queryParamsHandling:'merge'}) --> navigate to the path with query parameter handling
+  7. navigateByUrl('/path' , {preserveFragment:true}) --> navigate to the path with fragment
+  8. navigateByUrl('/path' , {relativeTo:this.route}) --> navigate to the path with relative route
+  9. navigateByUrl('/path' , {skipLocationChange:true}) --> navigate to the path without changing the url
+  10. navigateByUrl('/path' , {replaceUrl:true,queryParamsHandling:'merge',preserveFragment:true,relativeTo:this.route,skipLocationChange:true}) --> navigate to the path with all the options
+
+  11. navigateByUrl(url: string , options?: {replaceUrl?:boolean,queryParamsHandling?:''}) --> navigate to the given url  this wil be a fixed url and not recommned
+
+  navigate and navigateByUrl both are same but navigate use array and navigateByUrl use string
+
+  ---
