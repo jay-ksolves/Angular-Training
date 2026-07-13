@@ -530,3 +530,7 @@ Because a functional guard is just a single function (e.g., CanActivateFn), it c
   navigate and navigateByUrl both are same but navigate use array and navigateByUrl use string
 
   ---
+
+#### life cycle
+
+- <https://angular.dev/guide/components/lifecycle>
