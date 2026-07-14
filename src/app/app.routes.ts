@@ -11,47 +11,65 @@ import { authGuard } from './auth-guard';
 import { Successfulsignin } from './successfulsignin/successfulsignin';
 import { ProductComponent } from './product-component/product-component';
 import { Dummyapicall } from './dummyapicall/dummyapicall';
+import { UserCrud } from './user-crud/user-crud';
 
 export const routes: Routes = [
-    
-    {
-        path: '', component: Homepage,
-    },
-    {
-        path: 'about', component: Aboutpage,
-
-    },
-    {
-        path:'parent', component: Parent,
-        children:[
-            {
-            path: 'child', component: Child,
-            children:[
-                {
-                path: 'grandchild', component: Grandchild
-            }
-        ]
-        }]
-    },
-    {
-        path:'lazyload-component',loadComponent:()=> import('./lazylaodcomponent/lazylaodcomponent').then(m => m.Lazylaodcomponent)
-    },
-    {
-        path:'notlazyload-component', component:Notlazyloadcomponent
-    },
-    {
-        path:'signin', component: Signpage
-    },
-    {
-        path:'successful-signin', component: Successfulsignin, canActivate:[authGuard]
-    },
-    {
-        path:'product/:id',component: ProductComponent
-    },
-    {
-        path: 'apicall', component: Dummyapicall
-    },
-    {
-        path:'**', component:Pagenotfound
-    }
+  {
+    path: '',
+    component: Homepage,
+  },
+  {
+    path: 'about',
+    component: Aboutpage,
+  },
+  {
+    path: 'parent',
+    component: Parent,
+    children: [
+      {
+        path: 'child',
+        component: Child,
+        children: [
+          {
+            path: 'grandchild',
+            component: Grandchild,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: 'lazyload-component',
+    loadComponent: () =>
+      import('./lazylaodcomponent/lazylaodcomponent').then((m) => m.Lazylaodcomponent),
+  },
+  {
+    path: 'notlazyload-component',
+    component: Notlazyloadcomponent,
+  },
+  {
+    path: 'signin',
+    component: Signpage,
+  },
+  {
+    path: 'successful-signin',
+    component: Successfulsignin,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'product/:id',
+    component: ProductComponent,
+  },
+  {
+    path: 'apicall',
+    component: Dummyapicall,
+  },
+  {
+    path: 'users',
+    component: UserCrud,
+  },
+  {
+    path: '**',
+    component: Pagenotfound,
+  },
 ];
