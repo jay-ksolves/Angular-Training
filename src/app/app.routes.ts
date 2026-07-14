@@ -10,6 +10,7 @@ import { Signpage } from './signpage/signpage';
 import { authGuard } from './auth-guard';
 import { Successfulsignin } from './successfulsignin/successfulsignin';
 import { ProductComponent } from './product-component/product-component';
+import { Dummyapicall } from './dummyapicall/dummyapicall';
 
 export const routes: Routes = [
     
@@ -46,6 +47,9 @@ export const routes: Routes = [
     },
     {
         path:'product/:id',component: ProductComponent
+    },
+    {
+        path: 'apicall', component: Dummyapicall
     },
     {
         path:'**', component:Pagenotfound
