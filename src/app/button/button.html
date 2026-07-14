@@ -1,1 +1,12 @@
-<button (click)="clicked.emit()" class="bg-blue-600 p-2 border border-blue-100 rounded-md shadow-md m-2 cursor-pointer text-white">{{label()}}</button>
+<button
+  (click)="!disabled() && clicked.emit()"
+  [disabled]="disabled()"
+  [class]="
+    'px-4 py-2 rounded-lg font-medium text-white transition-all ' +
+    (disabled()
+      ? 'bg-slate-300 border border-slate-200 cursor-not-allowed shadow-none'
+      : 'bg-blue-600 hover:bg-blue-700 active:scale-95 shadow-sm hover:shadow cursor-pointer')
+  "
+>
+  {{ label() }}
+</button>

@@ -8,5 +8,6 @@ import { Component, input, output } from '@angular/core';
 })
 export class Button {
   label=input<string>();
+  disabled=input<boolean>(false);
   clicked=output<void>();
 }

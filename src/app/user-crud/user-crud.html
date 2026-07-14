@@ -7,27 +7,39 @@
     <table class="min-w-full divide-y divide-slate-200">
       <thead class="bg-slate-50">
         <tr>
-          <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Name</th>
-          <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Email</th>
-          <th class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Username</th>
-          <th class="px-6 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
+          <th
+            class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider"
+          >
+            Name
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider"
+          >
+            Email
+          </th>
+          <th
+            class="px-6 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider"
+          >
+            Username
+          </th>
+          <th
+            class="px-6 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider"
+          >
+            Actions
+          </th>
         </tr>
       </thead>
       <tbody class="divide-y divide-slate-100 bg-white">
         @for (user of userData(); track user?.id) {
           <tr class="hover:bg-slate-50 transition-colors">
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-800">{{ user?.name }}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-800">
+              {{ user?.name }}
+            </td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{{ user?.email }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{{ user?.username }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-medium">
-              <app-button
-                label="Edit"
-                (clicked)="handleEditUser(user.id)"
-              ></app-button>
-              <app-button 
-                label="Delete" 
-                (clicked)="handleDeleteUser(user.id)"
-              ></app-button>
+              <app-button label="Edit" (clicked)="handleEditUser(user.id)"></app-button>
+              <app-button label="Delete" (clicked)="handleDeleteUser(user.id)"></app-button>
             </td>
           </tr>
         } @empty {
@@ -46,43 +58,49 @@
   <app-modal>
     <div modalTitle>Edit User</div>
     <div modalBody>
-      <form #userForm="ngForm" class="space-y-4">
+      <form class="space-y-4" novalidate>
         <div class="flex flex-col gap-1.5">
           <label class="text-sm font-semibold text-slate-700">Name</label>
           <input
             type="text"
-            [(ngModel)]="selectedUser()!.name"
-            name="name"
-            required
+            [formField]="userForm.name"
             class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all bg-slate-50/50 hover:bg-slate-50 focus:bg-white"
           />
+          @if (userForm.name().touched() && userForm.name().invalid()) {
+            <span class="text-xs text-red-500">{{ userForm.name().errors()[0]?.message }}</span>
+          }
         </div>
         <div class="flex flex-col gap-1.5">
           <label class="text-sm font-semibold text-slate-700">Email</label>
           <input
             type="email"
-            [(ngModel)]="selectedUser()!.email"
-            name="email"
-            required
+            [formField]="userForm.email"
             class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all bg-slate-50/50 hover:bg-slate-50 focus:bg-white"
           />
+          @if (userForm.email().touched() && userForm.email().invalid()) {
+            <span class="text-xs text-red-500">{{ userForm.email().errors()[0]?.message }}</span>
+          }
         </div>
         <div class="flex flex-col gap-1.5">
           <label class="text-sm font-semibold text-slate-700">Username</label>
           <input
             type="text"
-            [(ngModel)]="selectedUser()!.username"
-            name="username"
-            required
+            [formField]="userForm.username"
             class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all bg-slate-50/50 hover:bg-slate-50 focus:bg-white"
           />
+          @if (userForm.username().touched() && userForm.username().invalid()) {
+            <span class="text-xs text-red-500">{{ userForm.username().errors()[0]?.message }}</span>
+          }
         </div>
       </form>
     </div>
     <div modalActions>
-      <app-button label="Save" (clicked)="userForm.valid && handleSave()"></app-button>
+      <app-button
+        label="Save"
+        [disabled]="userForm().invalid()"
+        (clicked)="handleSave()"
+      ></app-button>
       <app-button label="Cancel" (clicked)="handleCloseModal()"></app-button>
     </div>
   </app-modal>
 }
-
