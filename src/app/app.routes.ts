@@ -12,6 +12,7 @@ import { Successfulsignin } from './successfulsignin/successfulsignin';
 import { ProductComponent } from './product-component/product-component';
 import { Dummyapicall } from './dummyapicall/dummyapicall';
 import { UserCrud } from './user-crud/user-crud';
+import { Typeahead } from './typeahead/typeahead';
 
 export const routes: Routes = [
   {
@@ -67,6 +68,10 @@ export const routes: Routes = [
   {
     path: 'users',
     component: UserCrud,
+  },
+  {
+    path: 'typing',
+    component: Typeahead,
   },
   {
     path: '**',

@@ -1,0 +1,41 @@
+<h1 class="font-mono text-color-red-500 text-3xl">Welcome to typeahead feature</h1>
+
+<br />
+<hr />
+
+<app-card title="Welcome to user searching rxjs explanations" description="search for users: ">
+  <input
+    type="text"
+    value="{{ searchterm() }}"
+    placeholder="Type your input here"
+    (input)="onInputChange($event)"
+    class="border border-slate-200 bg-gray-200 shadow-lg rounded-full p-3"
+  />
+  <button
+    (click)="onClearSearch()"
+    class="bg-red-400 border-none shadow-lg p-3 rounded-full hover:bg-red-800 cursor-pointer text-white"
+  >
+    Clear
+  </button>
+</app-card>
+
+<div class="flex gap-3 justify-center items-center p-3">
+  <app-card title="All users: " description="">
+    <hr />
+    <br />
+    @for (user of allData(); track user.id) {
+      <li class="p-2 m-2 border-b">{{ user?.id }}-{{ user?.name }}-{{ user?.email }}</li>
+    } @empty {
+      <li class="p-2 m-2 text-gray-500">No users found</li>
+    }
+  </app-card>
+  <app-card title="filtered users: " description="">
+    <hr />
+    <br />
+    @for (user of filteredData(); track user.id) {
+      <li class="p-2 m-2 border-b">{{ user?.id }}-{{ user?.name }}-{{ user?.email }}</li>
+    } @empty {
+      <li class="p-2 m-2 text-gray-500">No users found</li>
+    }
+  </app-card>
+</div>
