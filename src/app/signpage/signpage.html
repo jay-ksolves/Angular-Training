@@ -9,7 +9,7 @@
 </app-card>
 <br/>
 @if(!isLoggedIn()){
-    <a routerLink="/" class="bg-blue-200  text-black-200 p-2 text-xl cursor-pointer hover:underline">Go to home page</a>
+    <a routerLink="/" class="bg-blue-200  text-black p-2 text-xl cursor-pointer hover:underline">Go to home page</a>
 }
 
 <br/>
@@ -23,6 +23,6 @@
     @else{
         <p>You are logged in</p>
         <br/>
-    <a routerLink="/successful-signin" class="bg-blue-200  text-black-200 p-2 text-xl cursor-pointer hover:underline">Go dashboard</a>  
+    <a routerLink="/successful-signin" class="bg-blue-200  text-black p-2 text-xl cursor-pointer hover:underline">Go dashboard</a>  
     }
 </app-card>
