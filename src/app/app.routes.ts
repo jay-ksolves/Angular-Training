@@ -15,6 +15,7 @@ import { UserCrud } from './user-crud/user-crud';
 import { Typeahead } from './typeahead/typeahead';
 import { StopwatchComponent } from './stopwatch/stopwatch';
 import { Lifecycle } from './lifecycle/lifecycle';
+import { StarRating } from './star-rating/star-rating';
 
 export const routes: Routes = [
   {
@@ -82,6 +83,10 @@ export const routes: Routes = [
   {
     path: 'lifecycle',
     component: Lifecycle,
+  },
+  {
+    path: 'star-rating',
+    component: StarRating,
   },
   {
     path: '**',
