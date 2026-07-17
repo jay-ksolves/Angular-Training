@@ -16,6 +16,7 @@ import { Typeahead } from './typeahead/typeahead';
 import { StopwatchComponent } from './stopwatch/stopwatch';
 import { Lifecycle } from './lifecycle/lifecycle';
 import { StarRating } from './star-rating/star-rating';
+import { Imageslider } from './imageslider/imageslider';
 
 export const routes: Routes = [
   {
@@ -87,6 +88,10 @@ export const routes: Routes = [
   {
     path: 'star-rating',
     component: StarRating,
+  },
+  {
+    path: 'image-slider',
+    component: Imageslider,
   },
   {
     path: '**',

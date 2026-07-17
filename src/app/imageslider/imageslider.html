@@ -1,0 +1,54 @@
+<div
+  class="container mx-auto p-4 mt-4 mb-4 border-2 shadow-lg shadow-gray-800 flex items-center justify-center w-1/2"
+>
+  <div class="flex justify-center items-center flex-col gap-3">
+    @if (currentImage(); as image) {
+      <img
+        [src]="image.url"
+        [alt]="image.title"
+        class="border-blue-600 shadow-lg rounded-md m-4 border-2"
+        height="500px"
+        width="500px"
+      />
+      <p class="text-md text-indigo-600">{{ image?.title || '' }}</p>
+      <span class="text-sm text-gray-500"
+        >Image {{ activeIndex() + 1 }} of {{ images().length }}</span
+      >
+    }
+  </div>
+
+  <div class="flex items-center gap-4">
+    <button
+      (click)="previousImage()"
+      class="bg-blue-600 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-blue-800 hover:scale-105"
+    >
+      Previous
+    </button>
+    <button
+      (click)="nextImage()"
+      class="bg-blue-600 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-blue-800 hover:scale-105"
+    >
+      Next
+    </button>
+
+    <div class="flex flex-col justify-center mt-4">
+      @for (image of images(); track image.id; let idx = $index) {
+        <img
+          [src]="image.thumbnailUrl"
+          [alt]="image.title"
+          (click)="activeIndex.set(idx)"
+          [class.border-indigo-600]="image.id === currentImage()?.id"
+          [class.scale-110]="image.id === currentImage()?.id"
+          [class.opacity-50]="image.id !== currentImage()?.id"
+          class="border-2 border-transparent shadow-md rounded-md m-2 cursor-pointer transition-all duration-200 hover:opacity-100 hover:scale-105"
+          height="50px"
+          width="50px"
+        />
+      } @empty {
+        <div>
+          <p>No Images Found</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>
