@@ -14,6 +14,7 @@ import { Dummyapicall } from './dummyapicall/dummyapicall';
 import { UserCrud } from './user-crud/user-crud';
 import { Typeahead } from './typeahead/typeahead';
 import { StopwatchComponent } from './stopwatch/stopwatch';
+import { Lifecycle } from './lifecycle/lifecycle';
 
 export const routes: Routes = [
   {
@@ -77,6 +78,10 @@ export const routes: Routes = [
   {
     path: 'stopwatch',
     component: StopwatchComponent,
+  },
+  {
+    path: 'lifecycle',
+    component: Lifecycle,
   },
   {
     path: '**',

@@ -1,0 +1,62 @@
+<div>
+  <h2>Angular Lifecycle Explorer</h2>
+  <p>
+    Open your browser's Developer Tools Console to inspect the order of lifecycle hook execution.
+  </p>
+  <hr />
+  <div class="container mb-4">
+    <h3>Controls</h3>
+
+    <div class="mb-4">
+      <button (click)="toggleChild()" class="border bg-red-500 text-white p-2 rounded-lg">
+        {{ isChildActive ? 'Destroy Child' : 'Create Child' }}
+      </button>
+      <span>(Triggers constructor, ngOnInit, ngOnDestroy, DestroyRef, etc.)</span>
+    </div>
+
+    <div class="mb-4">
+      <label>Change Input Text: </label>
+      <input
+        type="text"
+        [disabled]="!isChildActive"
+        [value]="parentText"
+        (input)="updateText($event)"
+        class="border bg-red-500 text-white p-2 rounded-lg"
+      />
+      <span>(Triggers ngOnChanges)</span>
+    </div>
+
+    <div class="mb-4">
+      <label>Change Projected Content: </label>
+      <input
+        type="text"
+        [disabled]="!isChildActive"
+        [value]="projectedText"
+        (input)="updateProjectedText($event)"
+        class="border bg-red-500 text-white p-2 rounded-lg"
+      />
+      <span>(Triggers ngAfterContentChecked)</span>
+    </div>
+
+    <div class="mb-4">
+      <button
+        (click)="triggerChangeDetection()"
+        class="border bg-red-500 text-white p-2 rounded-lg"
+      >
+        Run Change Detection (Clicks: {{ clickCount }})
+      </button>
+      <span>(Triggers ngDoCheck, afterEveryRender, etc.)</span>
+    </div>
+  </div>
+
+  <hr />
+
+  <h3>Playground</h3>
+  @if (isChildActive) {
+    <app-lifecycle-child [data]="parentText">
+      {{ projectedText }}
+    </app-lifecycle-child>
+  } @else {
+    <p class="bg-red-500 text-white p-2 rounded-lg">Child Component is Destroyed.</p>
+  }
+</div>
