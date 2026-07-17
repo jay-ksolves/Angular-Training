@@ -1,0 +1,34 @@
+<div class="mx-auto container bg-slate-900 py-6 max-w-md max-h-20vh p-4 rounded-lg">
+  <div class="bg-slate-400 rounded-lg border border-2 text-3xl p-4">
+    <p>{{ firstNumber() }} {{ operator() }} {{ secondNumber() }} = {{ result() }}</p>
+  </div>
+
+  <div class="grid grid-cols-4 gap-2 mt-4">
+    @for (op of operatorButtons; track $index) {
+      <button
+        class="cursor-pointer bg-red-400 border border-2 p-4 rounded-lg hover:scale-1.2 hover:border-slate-500"
+        (click)="getResult(op)"
+      >
+        {{ op }}
+      </button>
+    }
+
+    @for (oth of otherButtons; track $index) {
+      <button
+        class="cursor-pointer bg-yellow-400 border border-2 p-4 rounded-lg hover:scale-1.2 hover:border-red-500"
+        (click)="getResult(oth)"
+      >
+        {{ oth }}
+      </button>
+    }
+
+    @for (num of numberButtons; track $index) {
+      <button
+        class="cursor-pointer bg-white border border-2 p-4 rounded-lg hover:scale-1.2 hover:border-red-500"
+        (click)="getResult(num)"
+      >
+        {{ num }}
+      </button>
+    }
+  </div>
+</div>

@@ -17,6 +17,7 @@ import { StopwatchComponent } from './stopwatch/stopwatch';
 import { Lifecycle } from './lifecycle/lifecycle';
 import { StarRating } from './star-rating/star-rating';
 import { Imageslider } from './imageslider/imageslider';
+import { Calculator } from './calculator/calculator';
 
 export const routes: Routes = [
   {
@@ -92,6 +93,10 @@ export const routes: Routes = [
   {
     path: 'image-slider',
     component: Imageslider,
+  },
+  {
+    path: 'calculator',
+    component: Calculator,
   },
   {
     path: '**',
