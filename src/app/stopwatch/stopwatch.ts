@@ -10,6 +10,7 @@ import { TimerPipePipe } from '../pipe/timer-pipe-pipe';
   templateUrl: './stopwatch.html',
   styleUrl: './stopwatch.css'
 })
+
 export class StopwatchComponent implements OnDestroy {
 
   timer = signal<number>(0);

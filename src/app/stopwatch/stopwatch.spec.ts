@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Stopwatch } from './stopwatch';
+import { StopwatchComponent } from './stopwatch';
 
-describe('Stopwatch', () => {
-  let component: Stopwatch;
-  let fixture: ComponentFixture<Stopwatch>;
+describe('StopwatchComponent', () => {
+  let component: StopwatchComponent;
+  let fixture: ComponentFixture<StopwatchComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Stopwatch],
+      imports: [StopwatchComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Stopwatch);
+    fixture = TestBed.createComponent(StopwatchComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

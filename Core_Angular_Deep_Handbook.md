@@ -122,11 +122,13 @@ export class DashboardComponent {}
 ## Topic 9: Dependency Injection (DI) Fundamentals
 
 ### 1. Layman Explanation
+
 Imagine you run a restaurant. Instead of each chef leaving the kitchen, driving to the store, buying ingredients, and returning (creating their own dependencies), you hire a dedicated delivery manager (**Dependency Injection**). The chef simply leaves a list of needed ingredients on the counter (injects a service), and the delivery manager automatically brings them. The chef doesn't care how or where the ingredients were bought; they just cook.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To achieve loose coupling, enhance testability, and isolate component presentation from business logic and data fetching.
 * **When to use it?**
@@ -140,12 +142,14 @@ Imagine you run a restaurant. Instead of each chef leaving the kitchen, driving 
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Only constructor injection was supported: `constructor(private api: ApiService) {}`.
 * **Modern (v21/22)**: The `inject()` API is preferred. It makes class field initialization clean, avoids inheritance constructor boilerplate (`super(...)` passing arguments), and allows injection inside functional routes, functional guards, and factory functions.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Decoupled architecture makes unit testing extremely simple via service mocking.
   * Promotes the Single Responsibility Principle.
@@ -156,6 +160,7 @@ Imagine you run a restaurant. Instead of each chef leaving the kitchen, driving 
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 When a class uses `inject()`, Angular's active injection context retrieves the token from the **Injector** corresponding to the active node in the runtime execution tree. The DI registry is a map of keys (Tokens) to instances. If a requested singleton service does not exist in the active registry, the engine instantiates it, registers it, and returns the instance.
 
 ---
@@ -204,6 +209,7 @@ export class ProductListComponent {
 ---
 
 ### 7. Use Cases
+
 * Managing auth tokens globally via a shared `AuthService`.
 * Writing mock services for isolated component unit testing.
 
@@ -213,11 +219,13 @@ export class ProductListComponent {
 ## Topic 10: Injector Hierarchy
 
 ### 1. Layman Explanation
-Imagine a company hierarchy. If a junior developer needs a software license, they ask their team lead (**Element Injector**). If the lead doesn't have a budget, they ask the department manager (**Environment Injector**). If the manager doesn't have it, they ask corporate headquarters (**Root/Platform Injector**). If headquarters doesn't have it, the application crashes (**NullInjectorError**). 
+
+Imagine a company hierarchy. If a junior developer needs a software license, they ask their team lead (**Element Injector**). If the lead doesn't have a budget, they ask the department manager (**Environment Injector**). If the manager doesn't have it, they ask corporate headquarters (**Root/Platform Injector**). If headquarters doesn't have it, the application crashes (**NullInjectorError**).
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To allow precise control over the lifecycle and scope of dependencies—enabling global shared singletons, route-scoped services, or isolated component-level service instances.
 * **When to use it?**
@@ -232,12 +240,14 @@ Imagine a company hierarchy. If a junior developer needs a software license, the
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Modifiers like `@Optional()`, `@Self()`, `@SkipSelf()`, and `@Host()` had to be declared in constructors.
 * **Modern (v21/22)**: Modifiers are configured directly inside the `inject()` function options object, e.g., `inject(Service, { optional: true, self: true })`.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Prevents memory leaks by scoping service lifecycles to components.
   * Allows creating modular design patterns where child components inherit contextual configurations automatically.
@@ -247,11 +257,13 @@ Imagine a company hierarchy. If a junior developer needs a software license, the
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 When a component queries a dependency, Angular initiates a upward bubble traversal:
-1.  It checks the local element's `ElementInjector`.
-2.  If not found, it traverses up the DOM tree checking parent `ElementInjectors`.
-3.  If still unresolved, it jumps to the `EnvironmentInjector` tree (starting at Route injectors, then Root, then Platform).
-4.  If it reaches the base `NullInjector` without resolution, it throws a `NullInjectorError` unless the `optional: true` flag is specified.
+
+1. It checks the local element's `ElementInjector`.
+2. If not found, it traverses up the DOM tree checking parent `ElementInjectors`.
+3. If still unresolved, it jumps to the `EnvironmentInjector` tree (starting at Route injectors, then Root, then Platform).
+4. If it reaches the base `NullInjector` without resolution, it throws a `NullInjectorError` unless the `optional: true` flag is specified.
 
 ---
 
@@ -305,8 +317,9 @@ export class ParentWidgetComponent {
 ---
 
 ### 7. Use Cases
-*   Isolating database/API cache instances inside individual tabs of a multi-tab workspace component.
-*   Passing contextual parent configurations down to nested child layouts without explicit inputs.
+
+* Isolating database/API cache instances inside individual tabs of a multi-tab workspace component.
+* Passing contextual parent configurations down to nested child layouts without explicit inputs.
 
 ---
 ---
@@ -314,11 +327,13 @@ export class ParentWidgetComponent {
 ## Topic 11: Zone.js & Detection Cycle
 
 ### 1. Layman Explanation
+
 Imagine a smart home. Zone.js is like a motion sensor system. Every time someone moves a finger, makes a sound, or opens a door (clicks, timers, async network responses), the system alerts the central computer, which re-inspects *every single light and window in the entire house* to make sure it's showing the correct state.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To automate DOM updates by monkey-patching browser async APIs, allowing Angular to trigger change detection automatically when asynchronous work completes.
 * **When to use it?**
@@ -331,12 +346,14 @@ Imagine a smart home. Zone.js is like a motion sensor system. Every time someone
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Zone.js was a strict requirement. Applications could not boot or update easily without it.
 * **Modern (v21/22)**: Zoneless is officially supported out-of-the-box, letting you compile applications without loading the `zone.js` package.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * No manual change detection logic is required; updates "just work" in simple apps.
 * **Demerits**:
@@ -346,11 +363,13 @@ Imagine a smart home. Zone.js is like a motion sensor system. Every time someone
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 Zone.js interceptively overrides native browser asynchronous entry points (`setTimeout`, `Promise`, `addEventListener`). When an async callback completes:
-1.  Zone.js intercepts the completion hook.
-2.  It notifies Angular's `NgZone` instance.
-3.  `NgZone` triggers a synchronous call to `ApplicationRef.tick()`.
-4.  Angular traverses the component tree from the top root node down, executing template checks on every component node.
+
+1. Zone.js intercepts the completion hook.
+2. It notifies Angular's `NgZone` instance.
+3. `NgZone` triggers a synchronous call to `ApplicationRef.tick()`.
+4. Angular traverses the component tree from the top root node down, executing template checks on every component node.
 
 ---
 
@@ -388,8 +407,9 @@ export class ZoneOptimizationComponent implements OnInit {
 ---
 
 ### 7. Use Cases
-*   Running canvas animations, gaming loops, or WebGL rendering inside Angular without causing layout lag.
-*   Listening to high-frequency events like window resize, mouse moving, or touch drag scrolling.
+
+* Running canvas animations, gaming loops, or WebGL rendering inside Angular without causing layout lag.
+* Listening to high-frequency events like window resize, mouse moving, or touch drag scrolling.
 
 ---
 ---
@@ -397,13 +417,16 @@ export class ZoneOptimizationComponent implements OnInit {
 ## Topic 12: Zoneless Angular & OnPush Strategy
 
 ### 1. Layman Explanation
-Instead of the smart home checking *every room* whenever a door opens, Zoneless and OnPush are like smart indicators. 
-*   **OnPush** is like putting a "Do Not Disturb" sign on a room's door. Angular only opens the door to check the room if the person outside changes the inputs (inputs reference changes) or someone inside screams (a signal updates or event fires).
-*   **Zoneless** is the absolute removal of Zone.js. Components only redraw themselves when they receive direct signals that their data has changed, bypassing the old motion-sensor checks entirely.
+
+Instead of the smart home checking *every room* whenever a door opens, Zoneless and OnPush are like smart indicators.
+
+* **OnPush** is like putting a "Do Not Disturb" sign on a room's door. Angular only opens the door to check the room if the person outside changes the inputs (inputs reference changes) or someone inside screams (a signal updates or event fires).
+* **Zoneless** is the absolute removal of Zone.js. Components only redraw themselves when they receive direct signals that their data has changed, bypassing the old motion-sensor checks entirely.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To make change detection surgical and incredibly fast, removing the Zone.js runtime bundle and CPU overhead.
 * **When to use it?**
@@ -418,12 +441,14 @@ Instead of the smart home checking *every room* whenever a door opens, Zoneless 
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Zone.js was mandatory; OnPush required manual calls to `ChangeDetectorRef.markForCheck()`.
 * **Modern (v21/22)**: Experimental and stable Zoneless APIs (`provideExperimentalZonelessChangeDetection`) remove Zone.js completely. Signals automatically schedule render microtasks, rendering `markForCheck()` obsolete.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Faster bootstrap times and smaller bundlers (~13kb polyfill removed).
   * Major CPU efficiency gains.
@@ -434,6 +459,7 @@ Instead of the smart home checking *every room* whenever a door opens, Zoneless 
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 In Zoneless mode, when a signal changes value, it marks the component's view node as **Dirty**. It schedules a scheduler microtask (using `queueMicrotask`). When the browser's event loop executes the microtask, Angular runs change detection *only* for the dirty views and their descendants, completely ignoring unchanged branches of the component tree.
 
 ---
@@ -476,8 +502,9 @@ bootstrapApplication(AppComponent, {
 ---
 
 ### 7. Use Cases
-*   Enterprise enterprise-grade applications containing thousands of DOM nodes.
-*   Mobile Angular hybrid apps where battery consumption and CPU cycles are highly critical.
+
+* Enterprise enterprise-grade applications containing thousands of DOM nodes.
+* Mobile Angular hybrid apps where battery consumption and CPU cycles are highly critical.
 
 ---
 ---
@@ -485,16 +512,19 @@ bootstrapApplication(AppComponent, {
 ## Topic 13: RxJS Observables
 
 ### 1. Layman Explanation
-An Observable is like a conveyor belt carrying packages. 
-*   An **Observable** is the conveyor belt.
-*   An **Observer** is the worker standing at the end of the belt receiving the packages.
-*   A **Subject** is a conveyor belt controller that allows you to manually drop new items onto the belt from anywhere in the factory.
-*   A **BehaviorSubject** is a belt that holds the *most recent* package, so if a new worker arrives, they immediately get handed a copy of the last package.
-*   A **ReplaySubject** is a belt that remembers a history of packages and replays them to any new worker who shows up.
+
+An Observable is like a conveyor belt carrying packages.
+
+* An **Observable** is the conveyor belt.
+* An **Observer** is the worker standing at the end of the belt receiving the packages.
+* A **Subject** is a conveyor belt controller that allows you to manually drop new items onto the belt from anywhere in the factory.
+* A **BehaviorSubject** is a belt that holds the *most recent* package, so if a new worker arrives, they immediately get handed a copy of the last package.
+* A **ReplaySubject** is a belt that remembers a history of packages and replays them to any new worker who shows up.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To handle asynchronous, multi-valued data streams (like user clicks, WebSocket events, and HTTP requests) reactively and declaratively.
 * **When to use it?**
@@ -509,12 +539,14 @@ An Observable is like a conveyor belt carrying packages.
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: RxJS was the core state management system in Angular. Components had complex pipelines with `AsyncPipe`.
 * **Modern (v21/22)**: RxJS is strictly used for complex async streams and event handling. Local component state is modeled with Signals. Interoperability functions (`toSignal()`, `toObservable()`) bind them together.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Unmatched capability for dealing with complex event timelines.
   * Declarative handling of async actions (cancellation, retrying, error handling).
@@ -525,6 +557,7 @@ An Observable is like a conveyor belt carrying packages.
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 Observables are lazy pull/push systems. An Observable does not run until it is subscribed to. When `subscribe()` is called, it triggers the producer function. Subscribers register three callbacks: `next()`, `error()`, and `complete()`. When data is pushed, the callbacks are executed synchronously down the observer stack.
 
 ---
@@ -575,8 +608,9 @@ export class RxjsDemoComponent {
 ---
 
 ### 7. Use Cases
-*   Managing WebSocket messaging feeds (chats, stock tickers).
-*   Global state management stores that require historical event tracking.
+
+* Managing WebSocket messaging feeds (chats, stock tickers).
+* Global state management stores that require historical event tracking.
 
 ---
 ---
@@ -584,15 +618,18 @@ export class RxjsDemoComponent {
 ## Topic 14: RxJS Operators
 
 ### 1. Layman Explanation
-RxJS Operators are like workers standing along a factory conveyor belt. 
-*   `map` is a worker who repackages every box into a nicer wrapper.
-*   `filter` is a quality control inspector who throws away defective boxes.
-*   `switchMap` is a dispatcher who stops the old delivery truck immediately and sends out a brand new one whenever a new order comes in.
-*   `debounceTime` is a gatekeeper who waits for the line to be quiet for a moment before letting a bunch of items pass.
+
+RxJS Operators are like workers standing along a factory conveyor belt.
+
+* `map` is a worker who repackages every box into a nicer wrapper.
+* `filter` is a quality control inspector who throws away defective boxes.
+* `switchMap` is a dispatcher who stops the old delivery truck immediately and sends out a brand new one whenever a new order comes in.
+* `debounceTime` is a gatekeeper who waits for the line to be quiet for a moment before letting a bunch of items pass.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To filter, transform, merge, delay, and control asynchronous event streams without writing messy nested callback logic.
 * **When to use it?**
@@ -608,12 +645,14 @@ RxJS Operators are like workers standing along a factory conveyor belt.
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Complex multi-operator pipe chains used in routing, components, and HTTP interceptors.
 * **Modern (v21/22)**: Cleaner pipelines using `takeUntilDestroyed` for automated lifecycle bindings, and using `toSignal` directly at the end of the operator chain to pass clean signals to the view.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Solves complex async problems (like debounced autosuggest) in just a few lines of declarative code.
   * Highly robust error handling.
@@ -623,6 +662,7 @@ RxJS Operators are like workers standing along a factory conveyor belt.
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 Each operator in a `.pipe()` chain creates a new Observable wrapper. When the upstream Observable emits a value, the operator intercepts it, applies its logic, and calls the `next()` handler of the downstream observer. For switching operators like `switchMap`, the operator maintains an internal subscription reference and calls `.unsubscribe()` on it before starting a new internal observable execution.
 
 ---
@@ -677,8 +717,9 @@ export class SearchUsersComponent {
 ---
 
 ### 7. Use Cases
-*   Autosave forms that wait for the user to pause typing before saving to the server.
-*   Preventing double-click form submission errors using `exhaustMap`.
+
+* Autosave forms that wait for the user to pause typing before saving to the server.
+* Preventing double-click form submission errors using `exhaustMap`.
 
 ---
 ---
@@ -686,11 +727,13 @@ export class SearchUsersComponent {
 ## Topic 15: Signals (Angular 17-22+)
 
 ### 1. Layman Explanation
+
 A Signal is like a live Excel cell. If cell `A1` holds a value, and cell `B1` is defined with the formula `=A1 + 10` (a computed signal), whenever you edit the number in `A1`, `B1` changes immediately. If you display `B1` on a webpage, the webpage updates automatically. You never have to manually write code to trigger redraws; the system knows exactly which cells are linked together.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To introduce fine-grained, synchronous reactivity, allowing Angular to perform surgical DOM updates without relying on Zone.js to sweep the entire component tree.
 * **When to use it?**
@@ -704,12 +747,14 @@ A Signal is like a live Excel cell. If cell `A1` holds a value, and cell `B1` is
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older (v16 and below)**: Properties were plain variables; updates relied on Zone.js checks. Inputs used the `@Input()` decorator.
 * **Modern (v21/22)**: Standard input is `input()`, output is `output()`, and two-way binding is `model()`. These APIs return Signals, making the entire data flow reactive.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * No memory leaks (no subscriptions to manage).
   * Fine-grained, surgical rendering (Zoneless capable).
@@ -720,11 +765,13 @@ A Signal is like a live Excel cell. If cell `A1` holds a value, and cell `B1` is
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 Signals operate via a reactive dependency graph containing **Producers** (signals) and **Consumers** (computed, effect, component views).
-1.  When a consumer reads a signal, the signal registers the consumer as a dependency.
-2.  When the signal's value changes, it sends a stale notification to all its registered consumers.
-3.  Computed signals defer re-calculation until they are actually read (lazy evaluation).
-4.  Component views schedule a rendering pass only when a signal read in their template becomes stale.
+
+1. When a consumer reads a signal, the signal registers the consumer as a dependency.
+2. When the signal's value changes, it sends a stale notification to all its registered consumers.
+3. Computed signals defer re-calculation until they are actually read (lazy evaluation).
+4. Component views schedule a rendering pass only when a signal read in their template becomes stale.
 
 ---
 
@@ -811,6 +858,7 @@ export class ParentSignalsComponent {
 ---
 
 ### 7. Use Cases
+
 * Managing active user configurations, session data, and language translations.
 * Highly optimized tables and grids that update instantly without visual lag.
 
@@ -820,11 +868,13 @@ export class ParentSignalsComponent {
 ## Topic 2: Standalone Components
 
 ### 1. Layman Explanation
+
 Think of a standalone component as an independent freelancer. In the past (with NgModules), to hire a developer, you had to hire their entire agency (the module). Today, you hire the freelancer directly, and they bring exactly the tools they need written on their resume (the `imports` array).
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To simplify the developer experience, remove the complex layers of NgModule boilerplate, and make components modular, self-contained, and easily tree-shakeable.
 * **When to use it?**
@@ -838,12 +888,14 @@ Think of a standalone component as an independent freelancer. In the past (with 
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older (v14 and below)**: Complex setups requiring `declarations` in `AppModule`.
 * **Modern (v21/22)**: Standalone is enabled implicitly or via `standalone: true`. The `imports` array containing imports like `CommonModule` is replaced by importing specific directives (e.g. `NgIf`, `NgFor` or control flows) directly.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Massive boilerplate reduction.
   * Easier learning curve for beginners.
@@ -855,6 +907,7 @@ Think of a standalone component as an independent freelancer. In the past (with 
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 During compilation, the Angular compiler parses the component's `@Component` decorator. Because `standalone: true` is set, it isolates the component. Instead of relying on a parent module's injector, it creates a dedicated component compilation scope. When using lazy loading, the router creates an **Environment Injector** on the fly for the component, ensuring services provided at the component level are self-contained.
 
 ---
@@ -899,6 +952,7 @@ bootstrapApplication(AppComponent, appConfig)
 ---
 
 ### 7. Use Cases
+
 * All modern Angular applications.
 * Micro-frontend configurations where components must be dynamically loaded and self-contained.
 
@@ -908,11 +962,13 @@ bootstrapApplication(AppComponent, appConfig)
 ## Topic 3: Components & Templates
 
 ### 1. Layman Explanation
+
 A Component is like a smart TV. The physical screen showing the picture is the **Template** (HTML). The internal electronic circuit board controlling the logic is the **Class** (TypeScript). The case styling is the **Styles** (CSS). View Encapsulation is like the TV case; it prevents the TV's internal lights/signals from leaking out and messing with other TVs in the room.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To enable modular UI construction through reusable, encapsulated building blocks containing logic, presentation, and styling.
 * **When to use it?**
@@ -926,12 +982,14 @@ A Component is like a smart TV. The physical screen showing the picture is the *
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: CSS/styles were often defined globally or components leaked styles. Angular required specifying style sheets in `styleUrls` array.
 * **Modern (v21/22)**: Introduction of `styleUrl` (singular string) alongside `styleUrls` (array) for simplicity. Templates heavily leverage modern control flows (`@if`, `@for`) rather than directive-based binders (`*ngIf`, `*ngFor`).
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Complete separation of concerns or neat consolidation (inline).
   * Encapsulation guarantees styles don't leak.
@@ -941,10 +999,12 @@ A Component is like a smart TV. The physical screen showing the picture is the *
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 Angular compiles the template HTML into highly optimized JavaScript DOM instructions. View Encapsulation works in three ways:
-1.  **Emulated (Default)**: Angular appends unique attributes (e.g., `_nghost-x` and `_ngcontent-x`) to the element and styles, isolating them.
-2.  **None**: Styles are appended directly to the document head and apply globally.
-3.  **ShadowDom**: Uses the browser's native Shadow DOM API, completely isolating styles and DOM scope.
+
+1. **Emulated (Default)**: Angular appends unique attributes (e.g., `_nghost-x` and `_ngcontent-x`) to the element and styles, isolating them.
+2. **None**: Styles are appended directly to the document head and apply globally.
+3. **ShadowDom**: Uses the browser's native Shadow DOM API, completely isolating styles and DOM scope.
 
 ---
 
@@ -984,8 +1044,9 @@ p {
 ---
 
 ### 7. Use Cases
-*   Building UI design systems (buttons, inputs, cards).
-*   Shadow DOM encapsulation is useful when building components that will be deployed inside third-party websites (widgets) to ensure external styles do not break the component.
+
+* Building UI design systems (buttons, inputs, cards).
+* Shadow DOM encapsulation is useful when building components that will be deployed inside third-party websites (widgets) to ensure external styles do not break the component.
 
 ---
 ---
@@ -993,16 +1054,19 @@ p {
 ## Topic 4: Component Lifecycle
 
 ### 1. Layman Explanation
+
 Think of a component as an actor in a play.
-1.  **ngOnChanges**: The director hands the actor updated script lines (inputs change).
-2.  **ngOnInit**: The actor steps onto the stage (initialized).
-3.  **ngAfterContentInit**: The stage props are put inside the actor's pockets (content projected).
-4.  **ngAfterViewInit**: The curtains open, and the audience can see the actor (DOM rendered).
-5.  **ngOnDestroy**: The actor leaves the stage and cleans up their dressing room (destroyed/cleanup).
+
+1. **ngOnChanges**: The director hands the actor updated script lines (inputs change).
+2. **ngOnInit**: The actor steps onto the stage (initialized).
+3. **ngAfterContentInit**: The stage props are put inside the actor's pockets (content projected).
+4. **ngAfterViewInit**: The curtains open, and the audience can see the actor (DOM rendered).
+5. **ngOnDestroy**: The actor leaves the stage and cleans up their dressing room (destroyed/cleanup).
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To allow developers to execute specific logic at critical milestones during a component's creation, rendering, update, and destruction phases.
 * **When to use it?**
@@ -1018,12 +1082,14 @@ Think of a component as an actor in a play.
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Fully class-method-based lifecycle hooks (`ngOnInit`, etc.).
 * **Modern (v21/22)**: Functional hooks like `afterRender()` and `afterNextRender()` replace DOM-heavy logic. Reactive destruction can be handled cleanly using `DestroyRef` instead of writing `ngOnDestroy`.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Precise control over setup and teardown.
   * SSR compatibility using functional render hooks.
@@ -1033,6 +1099,7 @@ Think of a component as an actor in a play.
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 Angular runs a depth-first traversal of the component tree during change detection. When a node is reached, its bindings are updated. If inputs change, `ngOnChanges` is fired. Then, initialization hooks are executed. When the renderer finishes updating the DOM, Angular fires view hooks. In Zoneless/Signal mode, rendering cycles are highly optimized, running only when signals mark views as dirty.
 
 ---
@@ -1089,8 +1156,9 @@ export class LifecycleDemoComponent implements OnInit {
 ---
 
 ### 7. Use Cases
-*   Initializing Canvas or WebGL contexts inside `afterNextRender`.
-*   Cleaning up third-party libraries (e.g. Leaflet maps, Chart.js instances) when a route changes.
+
+* Initializing Canvas or WebGL contexts inside `afterNextRender`.
+* Cleaning up third-party libraries (e.g. Leaflet maps, Chart.js instances) when a route changes.
 
 ---
 ---
@@ -1098,15 +1166,18 @@ export class LifecycleDemoComponent implements OnInit {
 ## Topic 5: Data Binding
 
 ### 1. Layman Explanation
+
 Data binding is the link between your TypeScript variables (the database) and your HTML template (the display screen).
-*   **Interpolation `{{ }}`**: Reads a value and writes it onto the screen.
-*   **Property binding `[value]`**: Sends a value *into* an HTML element property.
-*   **Event binding `(click)`**: Sends a notification *out* from HTML back to TypeScript when something happens.
-*   **Two-way binding `[(ngModel)]` or `[(myValue)]`**: Creates a live, double-sided link. Change the variable, and the screen updates; type on the screen, and the variable updates.
+
+* **Interpolation `{{ }}`**: Reads a value and writes it onto the screen.
+* **Property binding `[value]`**: Sends a value *into* an HTML element property.
+* **Event binding `(click)`**: Sends a notification *out* from HTML back to TypeScript when something happens.
+* **Two-way binding `[(ngModel)]` or `[(myValue)]`**: Creates a live, double-sided link. Change the variable, and the screen updates; type on the screen, and the variable updates.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To automatically synchronize data state with the user interface, eliminating the need for manual DOM query selectors and event listeners.
 * **When to use it?**
@@ -1120,12 +1191,14 @@ Data binding is the link between your TypeScript variables (the database) and yo
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Heavily relied on `[(ngModel)]` from `FormsModule` for two-way binding.
 * **Modern (v21/22)**: Introduction of the `model()` signal API. You can create native two-way bindable signals without using Form modules!
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Eliminates manual DOM manipulation logic (`document.getElementById`).
   * Cleaner template readability.
@@ -1135,6 +1208,7 @@ Data binding is the link between your TypeScript variables (the database) and yo
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 During change detection, Angular checks if the bound expression's current value is strictly different (`===`) from its previous value. If it is different, it updates the corresponding DOM property directly. In modern Signal-based binding, Angular sets up a localized subscriber, bypassing global change detection sweeps.
 
 ---
@@ -1180,8 +1254,9 @@ export class BindingDemoComponent {
 ---
 
 ### 7. Use Cases
-*   Live search inputs updating display variables.
-*   Controlling interactive UI layouts (toggling menus, enabling/disabling submit buttons dynamically).
+
+* Live search inputs updating display variables.
+* Controlling interactive UI layouts (toggling menus, enabling/disabling submit buttons dynamically).
 
 ---
 ---
@@ -1189,11 +1264,13 @@ export class BindingDemoComponent {
 ## Topic 6: Directives
 
 ### 1. Layman Explanation
+
 If a Component is a full room (HTML + CSS + JS), a **Directive** is an interior designer. It doesn't build a new room; it enters an existing room and alters it—adding a new wallpaper (changing style), adding an automatic door (handling clicks), or deciding if a wall should be knocked down (structural directives).
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To enable reuse of behavior, styling, and DOM manipulation logic across different components without creating new templates.
 * **When to use it?**
@@ -1208,12 +1285,14 @@ If a Component is a full room (HTML + CSS + JS), a **Directive** is an interior 
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Structural directives like `*ngIf` and `*ngFor` were imported from `CommonModule`.
 * **Modern (v21/22)**: Native Control Flow (`@if`, `@for`, `@switch`) is built into the compiler. It is faster, requires no imports, and provides clean syntax. Custom directives now use Signal inputs (`input()`) for reactive binding.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Clean DRY (Don't Repeat Yourself) DOM manipulation.
   * Highly reusable across different pages.
@@ -1223,8 +1302,9 @@ If a Component is a full room (HTML + CSS + JS), a **Directive** is an interior 
 ---
 
 ### 5. Under the Hood (What happens in the background)
-*   **Native Control Flow (`@if`/`@for`)**: Compiles to direct JavaScript branch evaluations and loops inside the engine's template rendering function. It executes up to 30% faster than legacy `*ngFor` because it does not require instantiating directive classes or executing structural diffing routines.
-*   **Custom Directives**: Angular's compiler registers the directive selector and associates the directive instance with the element's DOM node. Host listeners (`@HostListener` or modern `host` metadata) are compiled into event bindings directly on the host node.
+
+* **Native Control Flow (`@if`/`@for`)**: Compiles to direct JavaScript branch evaluations and loops inside the engine's template rendering function. It executes up to 30% faster than legacy `*ngFor` because it does not require instantiating directive classes or executing structural diffing routines.
+* **Custom Directives**: Angular's compiler registers the directive selector and associates the directive instance with the element's DOM node. Host listeners (`@HostListener` or modern `host` metadata) are compiled into event bindings directly on the host node.
 
 ---
 
@@ -1293,8 +1373,9 @@ export class DirectiveDemoComponent {
 ---
 
 ### 7. Use Cases
-*   Creating a directive to automatically focus a input box when it appears.
-*   Input mask directives (e.g. automatically formatting text as a phone number `(123) 456-7890` while typing).
+
+* Creating a directive to automatically focus a input box when it appears.
+* Input mask directives (e.g. automatically formatting text as a phone number `(123) 456-7890` while typing).
 
 ---
 ---
@@ -1302,11 +1383,13 @@ export class DirectiveDemoComponent {
 ## Topic 7: Pipes
 
 ### 1. Layman Explanation
+
 A Pipe is like a language translator or a water filter. Raw data (dirty water) flows into the pipe, it processes it (filters it), and outputs a beautifully formatted string (clean water) onto the screen. For example, it turns a raw date number like `2026-07-15` into `"July 15, 2026"`.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To format and transform data directly within HTML templates without polluting the component's TypeScript controller with formatting logic.
 * **When to use it?**
@@ -1320,12 +1403,14 @@ A Pipe is like a language translator or a water filter. Raw data (dirty water) f
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Heavily relied on the `AsyncPipe` (`| async`) to read values from RxJS streams directly in templates.
 * **Modern (v21/22)**: While `AsyncPipe` is still used, developers increasingly convert RxJS streams to Signals in the component class using `toSignal()`, reading the signal directly in the template (`mySignal()`). This renders the `AsyncPipe` obsolete for modern signal-driven templates.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Reusable formatting utility.
   * Pure pipes are memoized (cached), saving CPU cycles.
@@ -1335,6 +1420,7 @@ A Pipe is like a language translator or a water filter. Raw data (dirty water) f
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 When a component template evaluates a pure pipe, Angular caches the output of the pipe. If the input references (e.g. checking primitive values or array references via strict equality) do not change, Angular returns the cached value directly without running the pipe's `transform` function.
 
 ---
@@ -1386,8 +1472,9 @@ export class PipeDemoComponent {
 ---
 
 ### 7. Use Cases
-*   Formatting bytes into human-readable sizes (e.g., `1024` -> `1 KB`).
-*   Converting raw ISO timestamps into local relative time expressions (e.g., `"2 minutes ago"`).
+
+* Formatting bytes into human-readable sizes (e.g., `1024` -> `1 KB`).
+* Converting raw ISO timestamps into local relative time expressions (e.g., `"2 minutes ago"`).
 
 ---
 ---
@@ -1395,11 +1482,13 @@ export class PipeDemoComponent {
 ## Topic 8: Template Reference & ViewChild/ContentChild
 
 ### 1. Layman Explanation
+
 A **Template Reference Variable** (`#myInput`) is like a sticky note you place on an item in your HTML template. **ViewChild** and **ContentChild** are like remote controllers that allow your TypeScript class to grab the items marked with those sticky notes, inspect them, and press their buttons.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To access children components, directives, or native DOM elements directly from the TypeScript component class.
 * **When to use it?**
@@ -1414,12 +1503,14 @@ A **Template Reference Variable** (`#myInput`) is like a sticky note you place o
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Used the `@ViewChild()` and `@ContentChild()` decorators, which were resolved at specific lifecycle points and required static queries configuration.
 * **Modern (v21/22)**: Signal-based queries (`viewChild()`, `viewChildren()`, `contentChild()`, `contentChildren()`) are now standard. They return read-only Signals, are reactive, require no decorator syntax, and can be queried instantly at runtime.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Direct access to elements.
   * Signal queries are type-safe and eliminate boilerplate lifecycle hook checks.
@@ -1429,6 +1520,7 @@ A **Template Reference Variable** (`#myInput`) is like a sticky note you place o
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 For decorator-based queries, Angular performs queries during compilation and patches the resolved class properties during the rendering pass. For Signal Queries (`viewChild`), Angular returns a reactive Signal node. Whenever change detection executes and updates the view hierarchy, it automatically publishes updates to the query Signal, allowing downstream `computed()` signals or `effect()` blocks to react to DOM element additions/removals immediately.
 
 ---
@@ -1494,8 +1586,9 @@ export class ParentQueryComponent {
 ---
 
 ### 7. Use Cases
-*   Focusing a search bar as soon as a modal window is opened.
-*   Instantiating third-party graphical libraries (like D3.js or canvas engines) by querying the native container element.
+
+* Focusing a search bar as soon as a modal window is opened.
+* Instantiating third-party graphical libraries (like D3.js or canvas engines) by querying the native container element.
 
 ---
 ---
@@ -1503,12 +1596,14 @@ export class ParentQueryComponent {
 ## Topic 16: Router Core
 
 ### 1. Layman Explanation
-Imagine a building with many rooms. The **Router** is the guide or the interactive directory map at the front entrance. When you want to visit the "Gym" (e.g., `/gym`), the guide leads you to the Gym room and sets it up. The `<router-outlet>` is the doorway where the current room's contents are loaded. 
+
+Imagine a building with many rooms. The **Router** is the guide or the interactive directory map at the front entrance. When you want to visit the "Gym" (e.g., `/gym`), the guide leads you to the Gym room and sets it up. The `<router-outlet>` is the doorway where the current room's contents are loaded.
 **Router Component Input Bindings** are like the guide taking the baggage you arrived with (such as URL path variables or query parameters like `?user=john`) and placing them directly onto the table inside your room (binding them directly to your component fields) so you don't have to search through your bags yourself.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To enable Single Page Applications (SPAs) where users can navigate between multiple views without reloading the page, maintaining the application state and performance.
 * **When to use it?**
@@ -1522,6 +1617,7 @@ Imagine a building with many rooms. The **Router** is the guide or the interacti
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Component controllers had to inject `ActivatedRoute` in their constructors and subscribe to route parameters:
   `this.route.paramMap.subscribe(params => this.id = params.get('id'))`.
 * **Modern (v21/22)**: Path parameters, query parameters, and static route data are bound directly to component inputs (Signals or standard inputs) by configuring `withComponentInputBinding()`.
@@ -1529,6 +1625,7 @@ Imagine a building with many rooms. The **Router** is the guide or the interacti
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Eliminates complex boilerplate subscriptions to `ActivatedRoute`.
   * Type-safe inputs directly inside templates.
@@ -1539,6 +1636,7 @@ Imagine a building with many rooms. The **Router** is the guide or the interacti
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 When a navigation event fires, the router resolves the matching route configuration. If `withComponentInputBinding()` is configured, the router's internal `RouteReuseStrategy` and rendering engine capture all path parameters, query parameters, and data properties. It then programmatically queries the target component's input definitions and pushes these values directly into the input nodes prior to executing lifecycle hooks.
 
 ---
@@ -1600,8 +1698,9 @@ export class ProductDetailComponent {
 ---
 
 ### 7. Use Cases
-*   Displaying dynamic detail pages (e.g., user profiles `/user/:id` or catalog items `/item/:itemId`) without injecting router services.
-*   Preserving UI filter states (e.g., search terms, page counts) directly in the URL query string.
+
+* Displaying dynamic detail pages (e.g., user profiles `/user/:id` or catalog items `/item/:itemId`) without injecting router services.
+* Preserving UI filter states (e.g., search terms, page counts) directly in the URL query string.
 
 ---
 ---
@@ -1609,12 +1708,14 @@ export class ProductDetailComponent {
 ## Topic 17: Guards & Resolvers
 
 ### 1. Layman Explanation
-*   **Guard**: A security bouncer standing at the entrance to a room. Before you enter (or leave), the bouncer checks your ID. If you have the right clearance (e.g., logged in, admin role), you enter. If not, they bounce you back to the lobby (login page).
-*   **Resolver**: A room service butler. Before you are allowed to enter your hotel room, they make sure the fruit basket is ready and the bed is made (fetching the user data from the backend). The moment you enter the room, the data is already sitting on the table waiting for you.
+
+* **Guard**: A security bouncer standing at the entrance to a room. Before you enter (or leave), the bouncer checks your ID. If you have the right clearance (e.g., logged in, admin role), you enter. If not, they bounce you back to the lobby (login page).
+* **Resolver**: A room service butler. Before you are allowed to enter your hotel room, they make sure the fruit basket is ready and the bed is made (fetching the user data from the backend). The moment you enter the room, the data is already sitting on the table waiting for you.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   Guards protect security boundaries on routes. Resolvers guarantee critical API data is loaded *before* a page displays, avoiding empty templates or layout shifts.
 * **When to use it?**
@@ -1629,12 +1730,14 @@ export class ProductDetailComponent {
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Guards and Resolvers were classes implementing interfaces (`CanActivate`, `Resolve`) registered as injectable providers.
 * **Modern (v21/22)**: Class-based guards/resolvers are deprecated. Angular 21/22 uses **Functional Guards and Resolvers** (plain arrow functions) that resolve dependencies inline using `inject()`.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Functional guards remove class boilerplate.
   * Simple, readable inline logic.
@@ -1645,12 +1748,14 @@ export class ProductDetailComponent {
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 During a routing transition, Angular resolves routes:
-1.  It checks `canMatch` guards.
-2.  It checks `canActivate` and `canActivateChild` guards.
-3.  If any return `false`, navigation aborts. If they return a `UrlTree`, navigation redirects.
-4.  Once guards pass, the router runs resolvers. It waits for the resolver observables to emit first values and complete.
-5.  Finally, it instantiates the component and injects the resolved data.
+
+1. It checks `canMatch` guards.
+2. It checks `canActivate` and `canActivateChild` guards.
+3. If any return `false`, navigation aborts. If they return a `UrlTree`, navigation redirects.
+4. Once guards pass, the router runs resolvers. It waits for the resolver observables to emit first values and complete.
+5. Finally, it instantiates the component and injects the resolved data.
 
 ---
 
@@ -1710,8 +1815,9 @@ export const routes: Routes = [
 ---
 
 ### 7. Use Cases
-*   Restricting administration screens (`/admin`) to users containing authenticated roles.
-*   Preventing loss of unsaved changes in a text editor by prompting the user on exit (`canDeactivate`).
+
+* Restricting administration screens (`/admin`) to users containing authenticated roles.
+* Preventing loss of unsaved changes in a text editor by prompting the user on exit (`canDeactivate`).
 
 ---
 ---
@@ -1719,12 +1825,14 @@ export const routes: Routes = [
 ## Topic 18: Lazy Loading
 
 ### 1. Layman Explanation
-Imagine a book containing 100 chapters. If the teacher prints and hands you all 100 chapters on your first day of school, your backpack is heavy, and it takes you forever to carry it home (**Eager Loading**). 
+
+Imagine a book containing 100 chapters. If the teacher prints and hands you all 100 chapters on your first day of school, your backpack is heavy, and it takes you forever to carry it home (**Eager Loading**).
 Instead, the teacher only prints and hands you Chapter 1. When you finally walk to the classroom door for Chapter 2, the teacher hands you the Chapter 2 pages on demand (**Lazy Loading**). Your backpack stays light, and you can run much faster.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To optimize application startup speeds by only loading the JavaScript code required for the initial landing screen, loading secondary screens later.
 * **When to use it?**
@@ -1738,6 +1846,7 @@ Instead, the teacher only prints and hands you Chapter 1. When you finally walk 
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Lazy loaded NgModules using string configuration paths:
   `loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)`
 * **Modern (v21/22)**: Lazy load standalone components directly using ES dynamic imports:
@@ -1746,6 +1855,7 @@ Instead, the teacher only prints and hands you Chapter 1. When you finally walk 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Massive initial load time improvements (higher Lighthouse mobile scores).
   * Reduced browser memory overhead.
@@ -1756,11 +1866,13 @@ Instead, the teacher only prints and hands you Chapter 1. When you finally walk 
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 When the compiler encounters `loadComponent` or `loadChildren` containing `import()`, it automatically splits that code and its local imports into a separate physical `.js` chunk (e.g. `chunk-XYZ.js`). At runtime, when the router navigates to this path:
-1.  The router pauses navigation.
-2.  It appends a script tag dynamically to the DOM to fetch the lazy chunk.
-3.  Once the chunk loads, it spins up an Environment Injector for the route.
-4.  It initializes the standalone component.
+
+1. The router pauses navigation.
+2. It appends a script tag dynamically to the DOM to fetch the lazy chunk.
+3. Once the chunk loads, it spins up an Environment Injector for the route.
+4. It initializes the standalone component.
 
 ---
 
@@ -1817,8 +1929,9 @@ export const appConfig: ApplicationConfig = {
 ---
 
 ### 7. Use Cases
-*   Isolating admin portals containing heavy visualization dashboards.
-*   Splitting user configuration, settings, and profile screens into lazy bundles.
+
+* Isolating admin portals containing heavy visualization dashboards.
+* Splitting user configuration, settings, and profile screens into lazy bundles.
 
 ---
 ---
@@ -1826,11 +1939,13 @@ export const appConfig: ApplicationConfig = {
 ## Topic 19: Template-Driven Forms
 
 ### 1. Layman Explanation
+
 Imagine you are filling out a physical paper form. You write your name directly on the blank line of the paper (HTML input). The paper itself keeps track of what you wrote. If the teacher wants to know your name, they look directly at the paper. This is **Template-Driven Forms**. The template (HTML) is in charge of the data and validation.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To allow rapid, declarative development of forms by defining form behaviors and validations directly inside the HTML template.
 * **When to use it?**
@@ -1844,12 +1959,14 @@ Imagine you are filling out a physical paper form. You write your name directly 
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Relied on heavy change detection loops triggered by Zone.js.
 * **Modern (v21/22)**: Fits seamlessly into modern Zoneless apps when configured with signal properties or standard model inputs.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Minimal TypeScript code.
   * Low learning curve.
@@ -1861,11 +1978,13 @@ Imagine you are filling out a physical paper form. You write your name directly 
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 When Angular compiles a template containing the `ngModel` directive:
-1.  The `NgForm` directive binds itself implicitly to the `<form>` element.
-2.  For each `ngModel`, Angular dynamically creates a `FormControl` instance in the background.
-3.  It registers the control with the parent `NgForm` container.
-4.  It uses built-in accessor classes (like `DefaultValueAccessor`) to pipe values from the input element to the component class variable.
+
+1. The `NgForm` directive binds itself implicitly to the `<form>` element.
+2. For each `ngModel`, Angular dynamically creates a `FormControl` instance in the background.
+3. It registers the control with the parent `NgForm` container.
+4. It uses built-in accessor classes (like `DefaultValueAccessor`) to pipe values from the input element to the component class variable.
 
 ---
 
@@ -1925,8 +2044,9 @@ export class ContactFormComponent {
 ---
 
 ### 7. Use Cases
-*   Basic search filters and query input parameters.
-*   Single-field inputs like email subscription boxes.
+
+* Basic search filters and query input parameters.
+* Single-field inputs like email subscription boxes.
 
 ---
 ---
@@ -1934,11 +2054,13 @@ export class ContactFormComponent {
 ## Topic 20: Reactive Forms
 
 ### 1. Layman Explanation
+
 Imagine a digital cockpit dashboard in a control room. Instead of the user writing directly on the paper, the control room has a computer screen containing a master database file (**FormGroup** and **FormControl**). If the user types in an input, the computer monitors the input, updates the database, runs security checks (validators), and can even block keys in real time. The component class (the controller) is fully in charge.
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To introduce a highly programmatic, type-safe, and stream-based approach to handling complex web forms.
 * **When to use it?**
@@ -1952,12 +2074,14 @@ Imagine a digital cockpit dashboard in a control room. Instead of the user writi
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Forms were completely untyped, meaning `form.value.name` was typed as `any`.
 * **Modern (v21/22)**: Strictly typed forms are standard (`FormGroup<{name: FormControl<string>}>`). Support for non-nullable values via `NonNullableFormBuilder` (or `inject(FormBuilder).nonNullable`).
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Compiles with strict typescript typing.
   * Simple unit testing (components can be tested without compiling templates).
@@ -1968,6 +2092,7 @@ Imagine a digital cockpit dashboard in a control room. Instead of the user writi
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 Reactive Forms establish a structural control tree (`FormGroup`, `FormControl`, `FormArray`). When a DOM change occurs, the value accessor updates the model directly. Changes trigger a event emission through internal RxJS streams, running validations synchronously first, then scheduling asynchronous validators.
 
 ---
@@ -2044,8 +2169,9 @@ export class UserProfileFormComponent {
 ---
 
 ### 7. Use Cases
-*   Complex shopping cart checkouts containing dynamic shipping/billing fields.
-*   Dynamic configuration forms (e.g. adding database fields dynamically).
+
+* Complex shopping cart checkouts containing dynamic shipping/billing fields.
+* Dynamic configuration forms (e.g. adding database fields dynamically).
 
 ---
 ---
@@ -2053,11 +2179,13 @@ export class UserProfileFormComponent {
 ## Topic 21: HttpClient
 
 ### 1. Layman Explanation
+
 Imagine the post office. **HttpClient** is the postman. When you want to send a letter (GET/POST request) to a friend (backend server), you hand it to the postman. The postman delivers it, waits for the response, and brings the reply back to you inside a envelope (Observable).
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To simplify network operations with a structured client wrapper supporting RxJS Observables, request configuration, and secure interceptor pipelines.
 * **When to use it?**
@@ -2071,12 +2199,14 @@ Imagine the post office. **HttpClient** is the postman. When you want to send a 
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Imported `HttpClientModule` in `AppModule`.
 * **Modern (v21/22)**: Configured in `app.config.ts` using `provideHttpClient()`. Can be combined with functional interceptors and features like `withFetch()` for modern native fetch backend support (making it SSR-friendly and faster).
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Stream-based API allows simple mapping and retry transformations.
   * Automated JSON response parsing.
@@ -2087,6 +2217,7 @@ Imagine the post office. **HttpClient** is the postman. When you want to send a 
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 Angular's HttpClient translates request configurations into browser-native APIs. By default in modern configurations using `withFetch()`, it runs requests through the browser's dynamic `fetch()` API. The engine wraps the fetch promise inside an RxJS Observable. When subscribed to, it initiates the HTTP pipeline, runs through interceptors, and returns responses.
 
 ---
@@ -2155,8 +2286,9 @@ export class UserListComponent {
 ---
 
 ### 7. Use Cases
-*   Fetching data from third-party APIs (e.g. weather data, stock feeds).
-*   Submitting checkout or user registration payloads.
+
+* Fetching data from third-party APIs (e.g. weather data, stock feeds).
+* Submitting checkout or user registration payloads.
 
 ---
 ---
@@ -2164,11 +2296,13 @@ export class UserListComponent {
 ## Topic 22: Interceptors
 
 ### 1. Layman Explanation
+
 Imagine a sorting office at the post office. Every letter that leaves or enters the building is inspected by an officer (**Interceptor**). They can stamp an authentication sticker on every outgoing letter (adding auth headers), log where it's going (analytics), or block the letter if it looks suspicious (error handling).
 
 ---
 
 ### 2. Why, When, When Not, and Differences
+
 * **Why does it exist?**
   To centralize and automate common tasks applied to outgoing requests or incoming responses (such as adding auth tokens, handling logging, or handling errors).
 * **When to use it?**
@@ -2182,12 +2316,14 @@ Imagine a sorting office at the post office. Every letter that leaves or enters 
 ---
 
 ### 3. Older vs. Modern Angular (v21/22)
+
 * **Older**: Interceptors were registered as multi-providers: `{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }`.
 * **Modern (v21/22)**: Interceptors are registered as simple functional arrow functions: `provideHttpClient(withInterceptors([authInterceptor]))`.
 
 ---
 
 ### 4. Benefits & Demerits
+
 * **Benefits**:
   * Zero duplicate authorization header logic across services.
   * Cleaner, lightweight functional architectures.
@@ -2198,6 +2334,7 @@ Imagine a sorting office at the post office. Every letter that leaves or enters 
 ---
 
 ### 5. Under the Hood (What happens in the background)
+
 Angular arranges interceptors in an onion-like chain. When a request is initialized, it is passed to the first interceptor. The interceptor processes it, and must pass it forward by calling `next(modifiedRequest)`. The request moves downstream to the final backend handler. The response then travels back upstream through the exact same interceptors, allowing response modifications.
 
 ---
@@ -2256,8 +2393,9 @@ export const appConfig: ApplicationConfig = {
 ---
 
 ### 7. Use Cases
-*   Automating token inclusion for authenticated routes.
-*   Centralized logging for analytical profiling of API latency.
+
+* Automating token inclusion for authenticated routes.
+* Centralized logging for analytical profiling of API latency.
 
 ---
 ---
@@ -2266,7 +2404,7 @@ export const appConfig: ApplicationConfig = {
 
 ### 1. Layman Explanation
 
-Imagine buying a picture frame. The frame has borders, backing, and glass, but it leaves an empty window in the middle. You can insert any picture you want inside that window. The frame itself doesn't need to know what the picture looks like. 
+Imagine buying a picture frame. The frame has borders, backing, and glass, but it leaves an empty window in the middle. You can insert any picture you want inside that window. The frame itself doesn't need to know what the picture looks like.
 
 In Angular, this frame is a component, the empty window is `<ng-content>`, and the picture is the HTML you project into it.
 
@@ -2299,18 +2437,20 @@ In Angular, this frame is a component, the empty window is `<ng-content>`, and t
 ### 4. Benefits & Demerits
 
 #### Benefits
+
 * **High Reusability**: Decouples UI structure from content.
 * **Styling Encapsulation**: Keeps layout styling uniform across the application.
 * **Flexibility**: Consumers can project arbitrary HTML, components, or directives.
 
 #### Demerits
+
 * **Lifecycle Evaluation**: Projected components are compiled and instantiated *within the parent's context*, meaning they initialize even if the child component decides to hide them (e.g., inside an `@if` block). To resolve this, use `ngTemplateOutlet` for lazy content rendering.
 
 ---
 
 ### 5. Under the Hood (What happens in the background)
 
-During compilation, the Angular compiler (`ngtsc`) parses `<ng-content>` tags as projection placeholders (slots) rather than actual components. 
+During compilation, the Angular compiler (`ngtsc`) parses `<ng-content>` tags as projection placeholders (slots) rather than actual components.
 
 1. **Logical vs. Physical DOM**: The projected nodes are logically children of the parent component (meaning they inherit styles and DI context from the parent).
 2. **Relocation**: During the rendering phase, Angular's rendering engine (Ivy) dynamically relocates the projected DOM nodes to the matching `<ng-content>` anchor points inside the child component's template.
@@ -2409,7 +2549,7 @@ export class CardWrapperComponent {}
 
 ### 1. Layman Explanation
 
-Imagine building a car engine. Instead of putting the engine in the car and driving it on the highway to see if it works, you place it on a test bench (**TestBed**). You spin the gears manually, feed it fake gasoline (**Mock Services**), and check if the exhaust operates correctly. 
+Imagine building a car engine. Instead of putting the engine in the car and driving it on the highway to see if it works, you place it on a test bench (**TestBed**). You spin the gears manually, feed it fake gasoline (**Mock Services**), and check if the exhaust operates correctly.
 
 This is unit testing. You test each small piece of your application in isolation to ensure it behaves exactly as expected.
 
@@ -2442,11 +2582,13 @@ This is unit testing. You test each small piece of your application in isolation
 ### 4. Benefits & Demerits
 
 #### Benefits
+
 * **Fast Feedback**: Runs in seconds in terminal watch mode.
 * **Regression Safety Net**: Gives developers confidence to rewrite inner components.
 * **Architectural Quality**: Forces you to write clean, decoupled, mockable code.
 
 #### Demerits
+
 * **Maintenance Overhead**: Highly coupled tests require frequent updates whenever component interfaces change.
 * **Mock Fragility**: Over-mocking can hide integration bugs, giving a false sense of security.
 
@@ -2553,7 +2695,7 @@ describe('CounterComponent', () => {
 
 ### 1. Layman Explanation
 
-Imagine hiring a robot worker. The robot sits in front of the screen, opens Chrome, navigates to your website, types a username and password into the forms, clicks the login button, waits for the dashboard to load, and checks if the dashboard header appears. 
+Imagine hiring a robot worker. The robot sits in front of the screen, opens Chrome, navigates to your website, types a username and password into the forms, clicks the login button, waits for the dashboard to load, and checks if the dashboard header appears.
 
 This is End-to-End (E2E) testing. It tests the application exactly how a human customer would, clicking real buttons and requesting real databases.
 
@@ -2585,11 +2727,13 @@ This is End-to-End (E2E) testing. It tests the application exactly how a human c
 ### 4. Benefits & Demerits
 
 #### Benefits
+
 * **High Confidence**: Tests resemble real human usage.
 * **Cross-Browser Verification**: Plays back tests on Chromium, Firefox, WebKit, and mobile user-agents.
 * **No Code Coupling**: Tests do not care what framework or code was used; they only inspect the resulting page.
 
 #### Demerits
+
 * **Slowness**: Running browsers and databases takes significant execution time.
 * **Flakiness**: Tests can fail due to network lag, timing variations, or dynamic changes to UI animations.
 
@@ -2678,7 +2822,7 @@ test.describe('Authentication Flow', () => {
 
 ### 1. Layman Explanation
 
-Imagine running a warehouse. If a client orders a single item, instead of searching through every single shelf in the entire building (**Default Change Detection**), you keep a list of popular items on a counter (**Signals**). 
+Imagine running a warehouse. If a client orders a single item, instead of searching through every single shelf in the entire building (**Default Change Detection**), you keep a list of popular items on a counter (**Signals**).
 
 You block off rare aisles that people rarely visit and only open them when someone walks into them (**Lazy Loading & Defer Blocks**), and you instruct workers they don't need to recheck shelves unless they receive a direct notification (**OnPush**).
 
@@ -2711,11 +2855,13 @@ You block off rare aisles that people rarely visit and only open them when someo
 ### 4. Benefits & Demerits
 
 #### Benefits
+
 * **Fast Time-to-Interactive (TTI)**: Reduces initial JavaScript bundle sizes significantly.
 * **CPU and Battery Efficiency**: Reduces browser layout thrashing.
 * **Surgical Updates**: Eliminates redundant render cycles.
 
 #### Demerits
+
 * **Chunky Layout Shifts**: Lazy elements can cause layout shifts when they suddenly render. Ensure you design placeholders (`@placeholder`) with the exact dimensions of the dynamic element.
 
 ---
@@ -2808,7 +2954,7 @@ export class DashboardPerformanceComponent {}
 
 ### 1. Layman Explanation
 
-Imagine running a public bulletin board in a park. People can pin letters to it. If someone pins a letter containing a hidden camera or a spell that steals the wallets of people who read it (**Cross-Site Scripting, XSS**), you have a major security breach. 
+Imagine running a public bulletin board in a park. People can pin letters to it. If someone pins a letter containing a hidden camera or a spell that steals the wallets of people who read it (**Cross-Site Scripting, XSS**), you have a major security breach.
 
 Angular acts as an automated inspector. Every time someone tries to pin a letter, it automatically checks the text, sanitizes the contents, and strips out harmful elements before displaying it to anyone.
 
@@ -2841,11 +2987,13 @@ Angular acts as an automated inspector. Every time someone tries to pin a letter
 ### 4. Benefits & Demerits
 
 #### Benefits
+
 * **Safe by Default**: Angular treats all values as untrusted by default.
 * **Automatic XSS Prevention**: Prevents script execution within normal interpolation `{{ }}` and property bindings `[innerHtml]`.
 * **Cookie Protection**: Enforces safe CORS and CSRF configurations.
 
 #### Demerits
+
 * **Stripped Content**: Valid HTML styling tags (e.g., custom attributes on SVGs or styles) can get stripped during automatic sanitization.
 
 ---
@@ -2925,4 +3073,3 @@ export class SecurityDemoComponent {
 
 * Rendering rich-text reviews created by customers in a wysiwyg editor safely.
 * Inserting dynamic SVG icons fetched from a secure API endpoint into the view.
-

@@ -38,8 +38,8 @@
             <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{{ user?.email }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">{{ user?.username }}</td>
             <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-medium gap-3">
-              <app-button label="Edit" (clicked)="handleEditUser(user.id)"></app-button>
-              <app-button label="Delete" (clicked)="handleDeleteUser(user.id)"></app-button>
+              <app-button label="Edit"  (clicked)="handleEditUser(user.id)" class="bg-blue-500 hover:bg-blue-600 text-white cursor-pointer"></app-button>
+              <app-button label="Delete"  (clicked)="handleDeleteUser(user.id)" class="bg-red-500 hover:bg-red-600 text-white cursor-pointer"></app-button>
             </td>
           </tr>
         } @empty {
