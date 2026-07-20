@@ -19,13 +19,13 @@ export class DummyApiService {
 
   getData(): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(this.apiUrl).pipe(
-      tap(response => console.log('✅ API Response:', response)),
+      tap(response => console.log(' API Response:', response)),
       catchError(this.handleError)
     );
   }
 
   private handleError(error: any): never {
-    console.error('❌ API Error:', error);
+    console.error(' API Error:', error);
     // You can add more logic here (toast notification, etc.)
     throw error;
   }
