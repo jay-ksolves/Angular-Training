@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-// Import things we need from RxJS
-import { of, from, interval } from 'rxjs';
+// RxJS imports
+import { of, from, interval, Subject } from 'rxjs';
 import { map, filter, debounceTime, switchMap, mergeMap, takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -12,9 +12,9 @@ import { map, filter, debounceTime, switchMap, mergeMap, takeUntil } from 'rxjs/
   templateUrl: './rxjs.html',
   styleUrl: './rxjs.css',
 })
-export class RxjsComponent {
+export class RxjsComponent implements OnDestroy {
 
-  // These variables store the result so we can show it on the HTML page
+  // These variables hold the results to display on the screen
   mapResult = '';
   filterResult = '';
   debounceResult = '';
@@ -22,14 +22,23 @@ export class RxjsComponent {
   mergeResult = '';
   takeResult = '';
 
+  // This Subject is used to stop the counter in takeUntil example
+  private stopCounter$ = new Subject<void>();
+
+  // Cleanup when user leaves the component
+  ngOnDestroy() {
+    this.stopCounter$.next();
+    this.stopCounter$.complete();
+  }
+
   // ==================== 1. MAP ====================
   runMap() {
-    // of(3) = create an observable that emits the number 3
+    // of(3) creates a simple Observable that emits one value: 3
     of(3).pipe(
-      // map = transform each value (here we multiply by 10)
+      // map() transforms each value. Here 3 becomes 30.
       map(number => number * 10)
     ).subscribe(result => {
-      // When we get the result, save it so Angular can display it
+      // Save result so Angular can show it in HTML
       this.mapResult = 'Result: ' + result;
     });
   }
@@ -38,12 +47,11 @@ export class RxjsComponent {
   runFilter() {
     this.filterResult = ''; // clear previous result
 
-    // from([1,2,3...]) = create observable from an array
+    // from() creates Observable from an array
     from([1, 2, 3, 4, 5, 6]).pipe(
-      // filter = only allow numbers that return true
+      // filter() only lets values through if condition is true
       filter(n => n % 2 === 0)   // keep only even numbers
     ).subscribe(n => {
-      // add each passed number to the result
       this.filterResult += n + ' ';
     });
   }
@@ -53,8 +61,7 @@ export class RxjsComponent {
     const text = event.target.value; // get what user typed
 
     of(text).pipe(
-      // debounceTime = wait 800 milliseconds before emitting
-      // This prevents sending request on every keystroke
+      // debounceTime waits for user to stop typing before emitting
       debounceTime(800)
     ).subscribe(value => {
       this.debounceResult = 'You typed: ' + value;
@@ -66,8 +73,8 @@ export class RxjsComponent {
     this.switchResult = 'Loading...';
 
     of(1).pipe(
-      // switchMap = cancel previous inner observable and start new one
-      // Very useful for search (only latest search matters)
+      // switchMap cancels old observable and starts new one
+      // Very important for search boxes
       switchMap(() => of('Data Loaded Successfully'))
     ).subscribe(result => {
       this.switchResult = result;
@@ -79,8 +86,7 @@ export class RxjsComponent {
     this.mergeResult = '';
 
     from([1, 2, 3]).pipe(
-      // mergeMap = map each value to a new observable and merge all results
-      // Runs everything in parallel (all at the same time)
+      // mergeMap runs all inner observables in parallel
       mergeMap(id => of('Item ' + id))
     ).subscribe(item => {
       this.mergeResult += item + ' | ';
@@ -91,13 +97,21 @@ export class RxjsComponent {
   startCounter() {
     this.takeResult = 'Counting... ';
 
-    // interval(500) = emit a number every 500 milliseconds
+    // Create a fresh stop subject
+    this.stopCounter$ = new Subject<void>();
+
+    // interval emits increasing numbers every 500ms
     interval(500).pipe(
-      // takeUntil = keep emitting until this inner observable emits something
-      // Here it will stop after 3 seconds (because of debounceTime)
-      takeUntil(of('stop').pipe(debounceTime(3000)))
+      // takeUntil stops everything when stopCounter$ emits
+      takeUntil(this.stopCounter$)
     ).subscribe(count => {
       this.takeResult += count + ' ';
     });
+  }
+
+  // Manual stop button
+  stopCounter() {
+    this.stopCounter$.next();           // send stop signal
+    this.takeResult += ' → Stopped!';
   }
 }
