@@ -1,92 +1,37 @@
 <header class="flex justify-between items-center bg-green-600 py-4 font-serif">
   <h2 class="text-3xl font-extrabold text-white">Angular Training</h2>
   <nav>
-    <a
-      routerLink="/signin"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Sign In</a
-    >
-    <a
-      routerLink="/"
-      routerLinkActive="active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Home</a
-    >
-    <a
-      routerLink="/about"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >About</a
-    >
-    <a
-      routerLink="/parent"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Parent</a
-    >
-    <a
-      routerLink="/lazyload-component"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Lazy Component</a
-    >
-    <a
-      routerLink="/notlazyload-component"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Not Lazy Component</a
-    >
-    <a
-      routerLink="/apicall"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Dummy API</a
-    >
-    <a
-      routerLink="/users"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Users</a
-    >
-    <a
-      routerLink="/typing"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Typing
+    <a routerLink="/signin" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Sign In</a>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Home</a>
+    <a routerLink="/about" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">About</a>
+    <a routerLink="/parent" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Parent</a>
+    <a routerLink="/lazyload-component" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Lazy Component</a>
+    <a routerLink="/notlazyload-component" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Not Lazy Component</a>
+    <a routerLink="/apicall" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Dummy API</a>
+    <a routerLink="/users" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Users</a>
+    <a routerLink="/typing" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Typing
     </a>
-    <a
-      routerLink="/stopwatch"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Stopwatch</a
-    >
-    <a
-      routerLink="/lifecycle"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Lifecycle</a
-    >
-    <a
-      routerLink="/star-rating"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Star Rating</a
-    >
-     <a
-      routerLink="/image-slider"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Image slider</a
-    >
-    <a
-      routerLink="/calculator"
-      routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline"
-      >Calculator</a
-    >
+    <a routerLink="/stopwatch" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Stopwatch</a>
+    <a routerLink="/lifecycle" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Lifecycle</a>
+    <a routerLink="/star-rating" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Star Rating</a>
+    <a routerLink="/image-slider" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Image slider</a>
+    <a routerLink="/calculator" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Calculator</a>
 
-</nav>
+    <a routerLink="/rxjs" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">RxJS</a> </nav>
 </header>
 <router-outlet></router-outlet>

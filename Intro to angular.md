@@ -547,3 +547,24 @@ ngAfterViewChecked Runs every time the component's view has been checked for cha
 Rendering afterNextRender Runs once the next time that all components have been rendered to the DOM.
 afterEveryRender Runs every time all components have been rendered to the DOM.
 Destruction ngOnDestroy Runs once before the component is destroyed.
+
+---
+
+#### rxjs
+
+Operator,What it does?,Why we use it?,Real World Example
+map,Changes every value,"To transform data (multiply, format, etc.)","Show price with 18% tax, convert name to uppercase"
+filter,Keeps only some values,To remove unwanted data,Show only products with price > 500
+debounceTime,Waits before doing something,To avoid too many requests while typing,Search box - wait until user stops typing
+switchMap,"Cancels old request, starts new one",To get only latest result (important!),"Search box, autocomplete, changing user selection"
+mergeMap,Runs all requests in parallel,"When you want all results, not just the latest",Load multiple images or comments at same time
+takeUntil,Stops when something happens,"To stop infinite streams (like counter, timer)",Stop loading data when user leaves the page
+
+
+
+map → You get raw data 5, you change it to 50 (like adding tax).
+filter → You have numbers 1 to 10, you only want even numbers.
+debounceTime → User is typing "Hello World". You don’t want to search after every letter. You wait 800ms after they stop typing.
+switchMap → User types "apple", then quickly changes to "mango". You cancel the "apple" search and only search for "mango".
+mergeMap → You want to load user details + user posts + user photos at the same time.
+takeUntil → You have a live counter. When user clicks "Stop" or leaves the page, stop the counter.

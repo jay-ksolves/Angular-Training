@@ -1,0 +1,41 @@
+<p>rxjs works!</p>
+
+<p>map, filter, switchMap, mergeMap, debounceTime, takeUntil</p>
+<hr />
+<br />
+
+<div class="box">
+  <h3>1. map()</h3>
+  <button (click)="runMap()">Run Map</button>
+  <p>{{ mapResult }}</p>
+</div>
+
+<div class="box">
+  <h3>2. filter()</h3>
+  <button (click)="runFilter()">Run Filter</button>
+  <p>{{ filterResult }}</p>
+</div>
+
+<div class="box">
+  <h3>3. debounceTime()</h3>
+  <input type="text" placeholder="Type something..." (input)="onType($event)" />
+  <p>{{ debounceResult }}</p>
+</div>
+
+<div class="box">
+  <h3>4. switchMap()</h3>
+  <button (click)="runSwitchMap()">Run SwitchMap</button>
+  <p>{{ switchResult }}</p>
+</div>
+
+<div class="box">
+  <h3>5. mergeMap()</h3>
+  <button (click)="runMergeMap()">Run MergeMap</button>
+  <p>{{ mergeResult }}</p>
+</div>
+
+<div class="box">
+  <h3>6. takeUntil()</h3>
+  <button (click)="startCounter()">Start Counter (stops after 3 sec)</button>
+  <p>{{ takeResult }}</p>
+</div>

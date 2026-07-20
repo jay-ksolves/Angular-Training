@@ -18,6 +18,7 @@ import { Lifecycle } from './lifecycle/lifecycle';
 import { StarRating } from './star-rating/star-rating';
 import { Imageslider } from './imageslider/imageslider';
 import { Calculator } from './calculator/calculator';
+import { RxjsComponent } from './rxjs/rxjs';
 
 export const routes: Routes = [
   {
@@ -97,6 +98,10 @@ export const routes: Routes = [
   {
     path: 'calculator',
     component: Calculator,
+  },
+  {
+    path: 'rxjs',
+    component: RxjsComponent,
   },
   {
     path: '**',
