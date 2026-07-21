@@ -19,11 +19,12 @@ import { Templetedrivenfromandsignal } from './templetedrivenfromandsignal/templ
 import { Usecommoncomponent } from './usecommoncomponent/usecommoncomponent';
 import { Header } from './header/header';
 import { Footer } from './footer/footer';
-
+import { ChangeDetectionDemoComponent } from './change-detection-demo/change-detection-demo';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,
+  imports: [
+    RouterOutlet,
     Login,
     Eventbinding,
     Getsetinputfieldvalue,
@@ -43,12 +44,13 @@ import { Footer } from './footer/footer';
     Usecommoncomponent,
     RouterLink,
     Header,
-    Footer
+    Footer,
+    ChangeDetectionDemoComponent,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('angular-training');
-  name = "Angular Training"
+  name = 'Angular Training';
 }

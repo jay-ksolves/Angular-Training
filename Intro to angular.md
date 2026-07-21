@@ -560,11 +560,140 @@ switchMap,"Cancels old request, starts new one",To get only latest result (impor
 mergeMap,Runs all requests in parallel,"When you want all results, not just the latest",Load multiple images or comments at same time
 takeUntil,Stops when something happens,"To stop infinite streams (like counter, timer)",Stop loading data when user leaves the page
 
-
-
 map → You get raw data 5, you change it to 50 (like adding tax).
 filter → You have numbers 1 to 10, you only want even numbers.
 debounceTime → User is typing "Hello World". You don’t want to search after every letter. You wait 800ms after they stop typing.
 switchMap → User types "apple", then quickly changes to "mango". You cancel the "apple" search and only search for "mango".
 mergeMap → You want to load user details + user posts + user photos at the same time.
 takeUntil → You have a live counter. When user clicks "Stop" or leaves the page, stop the counter.
+
+#### Change detection strategy
+
+- Zonejs
+**Zone.js, Change Detection Strategies, ChangeDetectorRef, markForCheck & detectChanges in Angular 21**
+
+### 1. What is Zone.js?
+
+**Zone.js** is a library that Angular historically used to automatically trigger change detection.
+
+- It **monkey-patches** browser async APIs (`setTimeout`, Promises, DOM events, `fetch`, HttpClient, etc.).
+- Whenever an async operation completes, Zone.js notifies Angular to run **change detection (CD)** on the component tree (top-down).
+- **Pros**: Magic — UI updates automatically.
+- **Cons**: Performance overhead, larger bundle, harder debugging.
+
+**In Angular 21+**:  
+**Zoneless change detection is the default** for new apps. No more Zone.js dependency. Change detection now relies on **explicit notifications**:
+
+- Signal updates (read in templates)
+- Template events
+- `markForCheck()`
+- Input binding changes, `AsyncPipe`, etc.
+
+This results in smaller bundles, better performance, and more predictable behavior.
+
+### 2. Change Detection Strategies
+
+Set via `@Component` decorator:
+
+```ts
+changeDetection: ChangeDetectionStrategy.OnPush   // or .Default / .Eager
+```
+
+#### ChangeDetectionStrategy.Default (Eager)
+
+- Component is checked **every time** a CD cycle runs.
+- Forgiving but less performant.
+- In Zoneless: Still eager within triggered cycles.
+
+#### ChangeDetectionStrategy.OnPush (Recommended)
+
+- Skips checking the component/subtree unless it is "dirty".
+- Checked when:
+  - `@Input()` reference changes (`===` comparison)
+  - Event handled inside the component or descendants
+  - `markForCheck()` is called
+  - Signals used in template update
+- **Requires immutability** for best results (new object/array references on changes).
+
+**Note**: OnPush is becoming the default strategy in upcoming versions.
+
+**Example (Immutability)**:
+
+```ts
+// Bad with OnPush
+this.user.name = 'New';
+
+// Good
+this.user = { ...this.user, name: 'New' };
+```
+
+### 3. ChangeDetectorRef
+
+Inject it for manual control:
+
+```ts
+constructor(private cdr: ChangeDetectorRef) {}
+```
+
+#### Key Methods
+
+| Method              | Purpose                                                      | Use Case                              | Scope                     |
+|---------------------|--------------------------------------------------------------|---------------------------------------|---------------------------|
+| `markForCheck()`    | Marks view + ancestors dirty for **next** CD cycle           | Async operations in OnPush components | Efficient, next cycle     |
+| `detectChanges()`   | Runs CD **immediately** on this component + children         | Rare (sync updates)                   | Local subtree only        |
+| `detach()`          | Stops automatic checks                                       | Extreme optimization                  | -                         |
+| `reattach()`        | Re-enables checks                                            | After detach                          | -                         |
+
+**markForCheck() vs detectChanges()**:
+
+- `markForCheck()` → Schedules for next cycle (most common).
+- `detectChanges()` → Runs immediately (more expensive).
+
+### 4. Example: OnPush + HTTP
+
+```ts
+@Component({
+  selector: 'my-comp',
+  template: `...`,
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class MyComponent {
+  data: any;
+
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
+
+  loadData() {
+    this.http.get('/api/data').subscribe(result => {
+      this.data = result;
+      this.cdr.markForCheck();   // Important for OnPush
+    });
+  }
+}
+```
+
+**Modern Alternative**: Use **Signals** — often eliminates need for `ChangeDetectorRef`.
+
+```ts
+data = signal<any>(null);
+// Template: {{ data() }} → Auto-updates
+```
+
+### 5. Best Practices (Angular 21+ Zoneless)
+
+- Prefer **Signals** for state management.
+- Use **OnPush** on presentational components and large lists.
+- Treat inputs as immutable.
+- Use `AsyncPipe` in templates.
+- Minimize manual `ChangeDetectorRef` usage.
+- Test thoroughly when migrating legacy apps.
+
+### Quick Comparison
+
+| Aspect                  | Default + Zone.js          | OnPush + Zone.js             | Zoneless (Angular 21+)          |
+|-------------------------|----------------------------|------------------------------|---------------------------------|
+| CD Trigger              | Every async event          | Inputs + events + manual     | Explicit (Signals, markForCheck)|
+| Performance             | Baseline                   | Good                         | Best                            |
+| Immutability            | Not required               | Strongly recommended         | Recommended with OnPush         |
+| Bundle Size             | Larger                     | Same                         | Smaller                         |
+
+---
