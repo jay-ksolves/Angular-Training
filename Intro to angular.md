@@ -700,26 +700,224 @@ data = signal<any>(null);
 
 ---
 
-#### NGRX
+### DAY 27: State Management with NgRx
+---
+**NgRx** is a state management library for Angular, based on Redux. It provides a single source of truth for your application's state.
 
-- NGRX is a library for state management in Angular
-- it follows RXJS patterns :
-  - Actions :these are events that describe what happened (e.g., "User logged in", "Data loaded successfully")
-  - Reducer : these are functions that take the current state and an action, and return a new state
-  - Effect : these are functions that handle side effects (e.g., HTTP requests, browser API calls)
-  - Selector : these are functions that extract data from the state
-  - Store : this is the central place that holds the state
-- steps to create a ngrx store :
-  - create action in the folder of the feature (e.g., /src/app/features/counter)  
-  - create effect (e.g., /src/app/features/counter)
-  - create reducer (e.g., /src/app/features/counter)
-  - create selector (e.g., /src/app/features/counter)
-  - create store (e.g., /src/app/features/counter)
-- in your app.module.ts : 
-  - add the store module
-  - add the router store module  
-  - add the entity store module (optional)
-  - add the effects module (optional)
-  - add the meta reducers (optional)
-  - add the router store module (optional)
-- you can use ngrx dev tools to debug the store
+#### 1. Core Concepts
+- **Store**: The single object that holds the state of the entire application.
+- **Actions**: Events dispatched to express a desire to change state (e.g., "Add Task").
+- **Reducers**: Pure functions that receive the current state and an action, returning a new state.
+- **Selectors**: Pure functions used to select, format, and slice pieces of state from the store.
+- **Effects**: Side-effect model that listens for actions, performs async tasks (like API calls), and returns new actions.
+- **DevTools**: Browser extension to inspect and time-travel state changes.
+
+#### 2. Task Manager Example (NgRx Store Setup)
+
+**A. Define Actions (`task.actions.ts`)**
+```typescript
+import { createAction, props } from '@ngrx/store';
+
+export const addTask = createAction('[Task] Add Task', props<{ title: string }>());n
+export const deleteTask = createAction('[Task] Delete Task', props<{ id: number }>());
+```
+
+**B. Define Reducer (`task.reducer.ts`)**
+```typescript
+import { createReducer, on } from '@ngrx/store';
+import { addTask, deleteTask } from './task.actions';
+
+export interface Task {
+  id: number;
+  title: string;
+}
+
+export interface TaskState {
+  tasks: Task[];
+}
+
+export const initialState: TaskState = {
+  tasks: []
+};
+
+export const taskReducer = createReducer(
+  initialState,
+  on(addTask, (state, { title }) => ({
+    ...state,
+    tasks: [...state.tasks, { id: Date.now(), title }]
+  })),
+  on(deleteTask, (state, { id }) => ({
+    ...state,
+    tasks: state.tasks.filter(task => task.id !== id)
+  }))
+);
+```
+
+**C. Define Selectors (`task.selectors.ts`)**
+```typescript
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { TaskState } from './task.reducer';
+
+export const selectTaskState = createFeatureSelector<TaskState>('tasks');
+
+export const selectAllTasks = createSelector(
+  selectTaskState,
+  (state) => state.tasks
+);
+```
+
+**D. Usage in Component (`task.component.ts`)**
+```typescript
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { selectAllTasks } from './task.selectors';
+import { addTask, deleteTask } from './task.actions';
+import { AsyncPipe } from '@angular/common';
+
+@Component({
+  selector: 'app-task',
+  imports: [AsyncPipe],
+  template: `
+    <input #taskInput type="text" placeholder="New Task" />
+    <button (click)="add(taskInput.value); taskInput.value=''">Add Task</button>
+
+    <ul>
+      @for (task of tasks$ | async; track task.id) {
+        <li>
+          {{ task.title }} 
+          <button (click)="delete(task.id)">X</button>
+        </li>
+      }
+    </ul>
+  `
+})
+export class TaskComponent {
+  private store = inject(Store);
+  tasks$ = this.store.select(selectAllTasks);
+
+  add(title: string) {
+    if (title.trim()) this.store.dispatch(addTask({ title }));
+  }
+
+  delete(id: number) {
+    this.store.dispatch(deleteTask({ id }));
+  }
+}
+```
+
+---
+
+### DAY 28: State Management Alternatives & NgRx vs Signals
+---
+
+#### 1. State Management Alternatives Overview
+- **Component Store**: Lightweight library from NgRx for managing local component state (alternative to global NgRx Store).
+- **Akita / NGXS**: Alternative state management libraries using Object-Oriented/Class-based decorators (simpler learning curve than boilerplate-heavy NgRx).
+- **Signals-based State**: Managing state natively using Angular's reactive Signals (`signal`, `computed`) without any third-party library.
+
+#### 2. NgRx vs Signals Comparison
+
+| Feature | Global NgRx | Natively using Signals |
+|---|---|---|
+| **Boilerplate** | High (Requires Actions, Reducer, Selector, Store setup) | Extremely Low (Only standard TypeScript variables and Signals) |
+| **Complexity** | Best for large enterprise apps with complex state workflows | Best for simple/medium state, local state, and direct reactive updates |
+| **Reactivity** | Observable-based (requires RxJS subscription / AsyncPipe) | Signal-based (synchronous, direct template value execution) |
+
+#### 3. Signals State Example (Same Task Feature)
+
+**State Service (`task-signal.service.ts`)**
+```typescript
+import { Injectable, signal, computed } from '@angular/core';
+
+export interface Task {
+  id: number;
+  title: string;
+}
+
+@Injectable({ providedIn: 'root' })
+export class TaskSignalService {
+  // Define State
+  private state = signal<{ tasks: Task[] }>({ tasks: [] });
+
+  // Read state reactively
+  tasks = computed(() => this.state().tasks);
+
+  // Actions/Mutations
+  addTask(title: string) {
+    this.state.update(curr => ({
+      ...curr,
+      tasks: [...curr.tasks, { id: Date.now(), title }]
+    }));
+  }
+
+  deleteTask(id: number) {
+    this.state.update(curr => ({
+      ...curr,
+      tasks: curr.tasks.filter(task => task.id !== id)
+    }));
+  }
+}
+```
+
+**Component Usage (`task-signals.component.ts`)**
+```typescript
+import { Component, inject } from '@angular/core';
+import { TaskSignalService } from './task-signal.service';
+
+@Component({
+  selector: 'app-task-signals',
+  template: `
+    <input #taskInput type="text" placeholder="New Task" />
+    <button (click)="taskService.addTask(taskInput.value); taskInput.value=''">Add</button>
+
+    <ul>
+      @for (task of taskService.tasks(); track task.id) {
+        <li>
+          {{ task.title }}
+          <button (click)="taskService.deleteTask(task.id)">X</button>
+        </li>
+      }
+    </ul>
+  `
+})
+export class TaskSignalsComponent {
+  protected taskService = inject(TaskSignalService);
+}
+```
+
+---
+
+### DAY 29: Internationalization (i18n) & Accessibility (a11y)
+---
+
+#### 1. Internationalization (i18n) 🌍
+Angular has built-in support to translate your app into multiple languages.
+
+- **`i18n` Attribute**: Mark text in templates for translation.
+  ```html
+  <h1 i18n>Hello World</h1>
+  ```
+- **Custom ID & Description**: Help translators by providing context.
+  ```html
+  <h1 i18n="User greeting|Greeting at the homepage@@homeGreeting">Hello World</h1>
+  ```
+- **Translation Workflow**:
+  1. Run `ng extract-i18n` to generate a `.xlf` translation source file.
+  2. Translate the text inside the `.xlf` file.
+  3. Configure build options in `angular.json` for different locales.
+
+#### 2. Accessibility (a11y) ♿
+Ensure your application can be used by everyone, including users with screen readers.
+
+- **ARIA Roles & Attributes**: Tell screen readers what elements do.
+  ```html
+  <button aria-label="Close dialog" (click)="close()">X</button>
+  ```
+- **Accessible Forms**: Always pair labels with inputs using `id` and `for`.
+  ```html
+  <label for="username">Username:</label>
+  <input id="username" type="text" aria-required="true" />
+  ```
+- **Active Element & Focus**: Use `cdkTrapFocus` from Angular CDK to keep keyboard focus inside modals/dialogs.
+- **a11y Audit**: Use tools like **Lighthouse** (built into Chrome DevTools) or **axe-core** to scan your app for accessibility issues.
+```

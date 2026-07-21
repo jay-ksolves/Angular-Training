@@ -9,6 +9,13 @@
   "projects": {
     "angular-training": {
       "projectType": "application",
+      "i18n": {
+      "sourceLocale": "en-US",
+      "locales": {
+        "fr": {
+          "translation": "src/locale/messages.fr.xlf"
+        }
+      }},
       "schematics": {},
       "root": "",
       "sourceRoot": "src",
@@ -17,6 +24,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "polyfills": ["@angular/localize/init"],
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "assets": [
@@ -40,8 +48,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "600kB",
+                  "maximumError": "1.2MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -55,6 +63,9 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "fr": {
+              "localize": ["fr"]
             }
           },
           "defaultConfiguration": "production"
@@ -62,12 +73,9 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
-            "production": {
-              "buildTarget": "angular-training:build:production"
-            },
-            "development": {
-              "buildTarget": "angular-training:build:development"
-            }
+            "development": { "buildTarget": "angular-training:build:development" },
+            "production": { "buildTarget": "angular-training:build:production" },
+            "fr": { "buildTarget": "angular-training:build:fr" }
           },
           "defaultConfiguration": "development"
         },

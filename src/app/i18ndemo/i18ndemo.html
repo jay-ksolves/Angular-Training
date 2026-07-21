@@ -1,0 +1,31 @@
+<div class="i18n-demo">
+  <h1 i18n="@@appTitle">Welcome to i18n Demo</h1>
+
+  <div class="language-switcher">
+    <button (click)="changeLanguage('en')" [attr.aria-pressed]="currentLang === 'en'">
+      English
+    </button>
+    <button (click)="changeLanguage('fr')" [attr.aria-pressed]="currentLang === 'fr'">
+      French
+    </button>
+    <button (click)="changeLanguage('es')" [attr.aria-pressed]="currentLang === 'es'">
+      Spanish
+    </button>
+  </div>
+
+  <h2 i18n="@@booksHeading">Books Collection</h2>
+
+  <ul>
+    @for (book of books; track book.id) {
+      <li>
+        <strong i18n="@@bookTitle">{{ book.title }}</strong>
+        <span i18n="@@byAuthor">by</span>
+        {{ book.author }}
+      </li>
+    }
+  </ul>
+
+  <p i18n="@@cartMessage">You have {{ books.length }} books in your collection.</p>
+
+  <button i18n="@@addToCartButton" aria-label="Add first book to cart">Add to Cart</button>
+</div>

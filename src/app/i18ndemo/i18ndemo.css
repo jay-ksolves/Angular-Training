@@ -1,0 +1,19 @@
+.i18n-demo {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.language-switcher {
+  margin: 20px 0;
+}
+
+button {
+  margin-right: 10px;
+  padding: 8px 16px;
+}
+
+button[aria-pressed="true"] {
+  background-color: #007bff;
+  color: white;
+}

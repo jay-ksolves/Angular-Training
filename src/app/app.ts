@@ -21,6 +21,7 @@ import { Header } from './header/header';
 import { Footer } from './footer/footer';
 import { ChangeDetectionDemoComponent } from './change-detection-demo/change-detection-demo';
 import { ProductPage } from './product-page/product-page';
+import { I18ndemo } from './i18ndemo/i18ndemo';
 
 @Component({
   selector: 'app-root',
@@ -48,6 +49,7 @@ import { ProductPage } from './product-page/product-page';
     Footer,
     ChangeDetectionDemoComponent,
     ProductPage,
+    I18ndemo
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',

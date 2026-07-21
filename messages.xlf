@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="appTitle" datatype="html">
+        <source>Welcome to i18n Demo</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/i18ndemo/i18ndemo.html</context>
+          <context context-type="linenumber">2,4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="booksHeading" datatype="html">
+        <source>Books Collection</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/i18ndemo/i18ndemo.html</context>
+          <context context-type="linenumber">16,19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bookTitle" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{ book.title }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/i18ndemo/i18ndemo.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="byAuthor" datatype="html">
+        <source>by</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/i18ndemo/i18ndemo.html</context>
+          <context context-type="linenumber">22,23</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cartMessage" datatype="html">
+        <source>You have <x id="INTERPOLATION" equiv-text="{{ books.length }}"/> books in your collection.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/i18ndemo/i18ndemo.html</context>
+          <context context-type="linenumber">28,30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="addToCartButton" datatype="html">
+        <source>Add to Cart</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/i18ndemo/i18ndemo.html</context>
+          <context context-type="linenumber">30,32</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
