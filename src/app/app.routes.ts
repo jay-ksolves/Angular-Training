@@ -19,6 +19,7 @@ import { StarRating } from './star-rating/star-rating';
 import { Imageslider } from './imageslider/imageslider';
 import { Calculator } from './calculator/calculator';
 import { RxjsComponent } from './rxjs/rxjs';
+import { CartPage } from './cart-page/cart-page';
 
 export const routes: Routes = [
   {
@@ -102,6 +103,10 @@ export const routes: Routes = [
   {
     path: 'rxjs',
     component: RxjsComponent,
+  },
+  {
+    path: 'cart',
+    component: CartPage,
   },
   {
     path: '**',

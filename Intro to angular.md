@@ -697,3 +697,29 @@ data = signal<any>(null);
 | Bundle Size             | Larger                     | Same                         | Smaller                         |
 
 ---
+
+---
+
+#### NGRX
+
+- NGRX is a library for state management in Angular
+- it follows RXJS patterns :
+  - Actions :these are events that describe what happened (e.g., "User logged in", "Data loaded successfully")
+  - Reducer : these are functions that take the current state and an action, and return a new state
+  - Effect : these are functions that handle side effects (e.g., HTTP requests, browser API calls)
+  - Selector : these are functions that extract data from the state
+  - Store : this is the central place that holds the state
+- steps to create a ngrx store :
+  - create action in the folder of the feature (e.g., /src/app/features/counter)  
+  - create effect (e.g., /src/app/features/counter)
+  - create reducer (e.g., /src/app/features/counter)
+  - create selector (e.g., /src/app/features/counter)
+  - create store (e.g., /src/app/features/counter)
+- in your app.module.ts : 
+  - add the store module
+  - add the router store module  
+  - add the entity store module (optional)
+  - add the effects module (optional)
+  - add the meta reducers (optional)
+  - add the router store module (optional)
+- you can use ngrx dev tools to debug the store

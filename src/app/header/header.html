@@ -32,6 +32,16 @@
       class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">Calculator</a>
 
     <a routerLink="/rxjs" routerLinkActive="active"
-      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">RxJS</a> </nav>
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline">RxJS</a>
+    <a routerLink="/cart" routerLinkActive="active"
+      class="bg-blue-200 text-black p-2 text-xl cursor-pointer hover:underline font-bold inline-flex items-center gap-2">
+      <span>🛒 Cart</span>
+      @if (cartCount() > 0) {
+        <span class="bg-red-600 text-white rounded-full px-2 py-0.5 text-xs font-sans">
+          {{ cartCount() }}
+        </span>
+      }
+    </a>
+  </nav>
 </header>
 <router-outlet></router-outlet>

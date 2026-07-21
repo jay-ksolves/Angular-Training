@@ -20,6 +20,7 @@ import { Usecommoncomponent } from './usecommoncomponent/usecommoncomponent';
 import { Header } from './header/header';
 import { Footer } from './footer/footer';
 import { ChangeDetectionDemoComponent } from './change-detection-demo/change-detection-demo';
+import { ProductPage } from './product-page/product-page';
 
 @Component({
   selector: 'app-root',
@@ -46,6 +47,7 @@ import { ChangeDetectionDemoComponent } from './change-detection-demo/change-det
     Header,
     Footer,
     ChangeDetectionDemoComponent,
+    ProductPage,
   ],
   templateUrl: './app.html',
   styleUrl: './app.css',
