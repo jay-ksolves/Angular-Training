@@ -391,7 +391,7 @@ const double = computed( () => count * 2);
 
 ----
 
-#### Pipes in Angular
+#### xcPipes in Angular
 
 - use to format data in angular without changing the original data
 - syntax: value | pipe
@@ -701,10 +701,12 @@ data = signal<any>(null);
 ---
 
 ### DAY 27: State Management with NgRx
+
 ---
 **NgRx** is a state management library for Angular, based on Redux. It provides a single source of truth for your application's state.
 
 #### 1. Core Concepts
+
 - **Store**: The single object that holds the state of the entire application.
 - **Actions**: Events dispatched to express a desire to change state (e.g., "Add Task").
 - **Reducers**: Pure functions that receive the current state and an action, returning a new state.
@@ -715,6 +717,7 @@ data = signal<any>(null);
 #### 2. Task Manager Example (NgRx Store Setup)
 
 **A. Define Actions (`task.actions.ts`)**
+
 ```typescript
 import { createAction, props } from '@ngrx/store';
 
@@ -723,6 +726,7 @@ export const deleteTask = createAction('[Task] Delete Task', props<{ id: number 
 ```
 
 **B. Define Reducer (`task.reducer.ts`)**
+
 ```typescript
 import { createReducer, on } from '@ngrx/store';
 import { addTask, deleteTask } from './task.actions';
@@ -754,6 +758,7 @@ export const taskReducer = createReducer(
 ```
 
 **C. Define Selectors (`task.selectors.ts`)**
+
 ```typescript
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { TaskState } from './task.reducer';
@@ -767,6 +772,7 @@ export const selectAllTasks = createSelector(
 ```
 
 **D. Usage in Component (`task.component.ts`)**
+
 ```typescript
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -808,9 +814,11 @@ export class TaskComponent {
 ---
 
 ### DAY 28: State Management Alternatives & NgRx vs Signals
+
 ---
 
 #### 1. State Management Alternatives Overview
+
 - **Component Store**: Lightweight library from NgRx for managing local component state (alternative to global NgRx Store).
 - **Akita / NGXS**: Alternative state management libraries using Object-Oriented/Class-based decorators (simpler learning curve than boilerplate-heavy NgRx).
 - **Signals-based State**: Managing state natively using Angular's reactive Signals (`signal`, `computed`) without any third-party library.
@@ -826,6 +834,7 @@ export class TaskComponent {
 #### 3. Signals State Example (Same Task Feature)
 
 **State Service (`task-signal.service.ts`)**
+
 ```typescript
 import { Injectable, signal, computed } from '@angular/core';
 
@@ -860,6 +869,7 @@ export class TaskSignalService {
 ```
 
 **Component Usage (`task-signals.component.ts`)**
+
 ```typescript
 import { Component, inject } from '@angular/core';
 import { TaskSignalService } from './task-signal.service';
@@ -888,36 +898,111 @@ export class TaskSignalsComponent {
 ---
 
 ### DAY 29: Internationalization (i18n) & Accessibility (a11y)
+
 ---
 
 #### 1. Internationalization (i18n) 🌍
+
 Angular has built-in support to translate your app into multiple languages.
 
 - **`i18n` Attribute**: Mark text in templates for translation.
+
   ```html
   <h1 i18n>Hello World</h1>
   ```
+
 - **Custom ID & Description**: Help translators by providing context.
+
   ```html
   <h1 i18n="User greeting|Greeting at the homepage@@homeGreeting">Hello World</h1>
   ```
+
 - **Translation Workflow**:
   1. Run `ng extract-i18n` to generate a `.xlf` translation source file.
   2. Translate the text inside the `.xlf` file.
   3. Configure build options in `angular.json` for different locales.
 
 #### 2. Accessibility (a11y) ♿
+
 Ensure your application can be used by everyone, including users with screen readers.
 
 - **ARIA Roles & Attributes**: Tell screen readers what elements do.
+
   ```html
   <button aria-label="Close dialog" (click)="close()">X</button>
   ```
+
 - **Accessible Forms**: Always pair labels with inputs using `id` and `for`.
+
   ```html
   <label for="username">Username:</label>
   <input id="username" type="text" aria-required="true" />
   ```
+
 - **Active Element & Focus**: Use `cdkTrapFocus` from Angular CDK to keep keyboard focus inside modals/dialogs.
 - **a11y Audit**: Use tools like **Lighthouse** (built into Chrome DevTools) or **axe-core** to scan your app for accessibility issues.
+
 ```
+
+
+
+#### Security: 
+- Angular has great built-in protections,
+- import { SafeHtml, DomSanitizer } from '@angular/platform-browser';
+
+- Available Sanitizers:
+
+bypassSecurityTrustHtml()
+bypassSecurityTrustUrl()
+bypassSecurityTrustResourceUrl() (for iframes, videos)
+
+
+- . XSS Protection (Cross-Site Scripting)
+Angular’s Default Protection:
+
+{{ interpolation }} → automatically escaped
+[innerHTML] → sanitized unless you use DomSanitizer
+
+Bad Practice:
+HTML<div [innerHTML]="userComment"></div>   <!-- Dangerous if userComment comes from user -->
+Better:
+TypeScriptthis.safeComment = this.sanitizer.sanitize(SecurityContext.HTML, userComment);
+
+
+
+- CSRF Protection (Cross-Site Request Forgery)
+Angular has built-in support.
+Setup (Standalone - Angular 21):
+In app.config.ts:
+TypeScript
+
+````
+import { ApplicationConfig } from '@angular/core';
+import { provideHttpClient, withXsrfConfiguration } from '@angular/common/http';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(
+      withXsrfConfiguration({
+        cookieName: 'XSRF-TOKEN',     // backend must set this cookie
+        headerName: 'X-XSRF-TOKEN'
+      })
+    )
+  ]
+};
+
+````
+Backend should:
+
+Set XSRF-TOKEN cookie on login
+Expect X-XSRF-TOKEN header on state-changing requests (POST, PUT, DELETE)
+
+
+5. Other Important Security Practices
+
+PracticeHow to do it
+Http InterceptorAdd auth token, logging, error handling
+Strict ModeEnable in tsconfig.json: "strict": true, "strictTemplates": true
+Route GuardsProtect admin routes with CanActivate
+Environment VariablesNever put API keys in frontend code
+Content Security Policy (CSP)Add meta tag or server header
